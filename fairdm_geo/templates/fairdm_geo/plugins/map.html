@@ -1,0 +1,31 @@
+{% load i18n static sekizai_tags partials %}
+<c-plugin layout="application">
+<style>
+    #shadow {
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+    }
+</style>
+<script src="https://unpkg.com/maplibre-gl@^4.7.1/dist/maplibre-gl.js"
+        onload='loadMap()'></script>
+<link href="https://unpkg.com/maplibre-gl@^4.7.1/dist/maplibre-gl.css"
+      rel="stylesheet" />
+<div id="maplibre" class="w-100 h-100">
+  <div id="shadow"></div>
+</div>
+<script>
+    function loadMap() {
+    // Initialize the map
+    const map = new maplibregl.Map({
+      container: 'maplibre', // ID of the element where the map will be displayed
+      style: 'https://demotiles.maplibre.org/style.json', // Style URL
+      center: [0, 0], // Initial map center in [lng, lat]
+      zoom: 2 // Initial zoom level
+    });
+  }
+</script>
+</c-plugin>

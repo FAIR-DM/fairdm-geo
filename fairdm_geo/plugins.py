@@ -1,9 +1,10 @@
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from fairdm import plugins
+from fairdm.plugins import GenericPlugin
 
 
-class Map(TemplateView):
+class Map(GenericPlugin, TemplateView):
     name = _("Map")
     icon = "map"
     template_name = "fairdm_geo/plugins/map.html"

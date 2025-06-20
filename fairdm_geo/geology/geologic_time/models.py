@@ -2,8 +2,9 @@ import re
 
 from django.db import models
 from django.utils.translation import gettext as _
-from fairdm_geo.vocabularies import stratigraphy
 from research_vocabs.models import AbstractConcept
+
+from fairdm_geo.vocabularies import stratigraphy
 
 # this captures age values from the comment field of GeologicalEra concepts
 AGE_PATTERN = re.compile(
@@ -14,6 +15,7 @@ AGE_PATTERN = re.compile(
 class GeologicalTimescale(AbstractConcept):
     vocabulary_name = None
     _vocabulary = stratigraphy.GeologicalTimescale()
+    vocabulary = None
     name = models.CharField(_("name"), max_length=255, unique=True, primary_key=True)
     older_bound = models.FloatField(_("older bound"), blank=True, null=True)
     older_bound_uncertainty = models.FloatField(_("older bound uncertainty"), blank=True, null=True)

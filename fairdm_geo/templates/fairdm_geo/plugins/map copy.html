@@ -1,0 +1,72 @@
+{% load i18n static sekizai_tags partials %}
+<c-layouts.plugin style="application">
+<style>
+    #shadow {
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+    }
+</style>
+<script src="https://unpkg.com/maplibre-gl@^5.5.0/dist/maplibre-gl.js"
+        onload='loadMap()'
+        defer></script>
+<link href="https://unpkg.com/maplibre-gl@^5.5.0/dist/maplibre-gl.css"
+      rel="stylesheet" />
+<div id="maplibre" class="w-100 h-100">
+  <div id="shadow"></div>
+</div>
+<script>
+    const geojson = {{ base_object.as_geojson|safe }};
+    const coords = geojson.geometry.coordinates;
+
+    function loadMap() {
+    // Initialize the map
+    const map = new maplibregl.Map({
+      container: 'maplibre', // ID of the element where the map will be displayed
+      style: 'https://demotiles.maplibre.org/style.json', // Style URL
+      center: [0, 0], // Initial map center in [lng, lat]
+      zoom: 2 // Initial zoom level
+    });
+    map.on('style.load', () => {
+        map.setProjection({
+            type: 'globe', // Set projection to globe
+        });
+        map.setCenter(coords);
+
+    });
+    map.on('load', () => {
+
+        map.addSource('organization', {
+            type: 'geojson',
+            data: geojson
+        });
+
+        {% comment %} map.addLayer({
+            id: 'organization-point',
+            type: 'symbol',
+            source: 'organization',
+            layout: {
+                'icon-image': 'marker-15',  // icon name from the sprite
+                'icon-size': 1,
+                'icon-anchor': 'bottom'
+            }
+}); {% endcomment %}
+          new maplibregl.Marker()
+            .setLngLat(coords)
+            .addTo(map);
+          // Fly to the marker
+          map.flyTo({
+            center: coords,
+            zoom: 4,            // adjust as needed (e.g., 12 for city level)
+            speed: 0.4,          // optional: animation speed
+            curve: 1,          // optional: animation curvature
+});
+        });
+
+  }
+</script>
+</c-layouts.plugin>
+<div class="h-100 w-100">{{ plot }}</div>

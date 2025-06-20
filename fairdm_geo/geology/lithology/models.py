@@ -1,13 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext as _
-from fairdm_geo.vocabularies.cgi import geosciml
 from research_vocabs.models import AbstractConcept
+
+from fairdm_geo.vocabularies.cgi import geosciml
 
 
 class SimpleLithology(AbstractConcept):
     vocabulary_name = None
     _vocabulary = geosciml.SimpleLithology()
     name = models.CharField(_("name"), max_length=255, unique=True, primary_key=True)
+    vocabulary = None
 
     class Meta:
         verbose_name = _("Simple Lithology")

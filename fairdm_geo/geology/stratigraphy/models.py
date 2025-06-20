@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext as _
-from fairdm_geo.vocabularies.cgi import geosciml
 from research_vocabs.fields import ConceptField
+
+from fairdm_geo.vocabularies.cgi import geosciml
 
 
 class StratigraphicUnit(models.Model):

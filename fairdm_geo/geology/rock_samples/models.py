@@ -8,6 +8,7 @@ from fairdm_geo.vocabularies.cgi import geosciml
 
 class CompoundMaterial(GenericEarthSample):
     _defaults = {}
+    vocabulary = None
 
     # I guess this probably needs to be a relationship to a new model
     constituent_parts = ConceptField(

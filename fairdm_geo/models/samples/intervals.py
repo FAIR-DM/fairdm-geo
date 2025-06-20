@@ -1,5 +1,9 @@
 from django.utils.translation import gettext as _
 from fairdm.db import models
+from research_vocabs.fields import ConceptManyToManyField
+
+from fairdm_geo.vocabularies.cgi import geosciml
+from fairdm_geo.vocabularies.stratigraphy import GeologicalTimescale
 
 from .generic import GenericEarthSample
 
@@ -104,14 +108,16 @@ class VerticalDepthInterval(VerticalInterval):
 
 
 class GeoDepthInterval(VerticalDepthInterval):
-    lithology = models.ManyToManyField(
-        "lithology.SimpleLithology",
+    lithology = ConceptManyToManyField(
+        vocabulary=geosciml.SimpleLithology,
         verbose_name=_("lithology"),
         help_text=_("The lithology of the interval."),
         blank=True,
     )
-    age = models.ManyToManyField(
-        "geologic_time.GeologicalTimescale",
+    # age = models.ManyToManyField(
+    # "geologic_time.GeologicalTimescale",
+    age = ConceptManyToManyField(
+        vocabulary=GeologicalTimescale,
         verbose_name=_("geologic age"),
         help_text=_("The geologic age of the interval."),
         blank=True,

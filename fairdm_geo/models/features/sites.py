@@ -12,6 +12,8 @@ from ..samples.intervals import GeoDepthInterval
 
 
 class SamplingLocation(GenericEarthSample):
+    icon = "location"
+
     type = ConceptField(
         vocabulary=SiteType,
         default="unknown",
@@ -21,6 +23,8 @@ class SamplingLocation(GenericEarthSample):
     )
 
     elevation_datum = ConceptField(
+        verbose_name=_("elevation datum"),
+        help_text=_("The reference point for the elevation measurement, such as Mean Sea Level (MSL)."),
         vocabulary=ElevationDatum,
         default="MSL",
     )

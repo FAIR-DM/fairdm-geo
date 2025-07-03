@@ -56,7 +56,6 @@ class VerticalInterval(GenericEarthSample):
         help_text=_(
             "The total depth of the vertical interval, calculated as the absolute difference between the interval top and interval bottom."
         ),
-        editable=False,
         blank=True,
         null=True,
     )
@@ -66,7 +65,6 @@ class VerticalInterval(GenericEarthSample):
         verbose_name=_("vertical datum"),
         help_text=_("The vertical datum used to determine depth measurements."),
         default="MSL",
-        editable=False,
         choices=[
             ("MSL", "Mean Sea Level"),
         ],

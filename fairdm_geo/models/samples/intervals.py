@@ -76,7 +76,7 @@ class VerticalInterval(GenericEarthSample):
         verbose_name_plural = _("vertical intervals")
         constraints = [
             models.CheckConstraint(
-                check=models.Q(bottom__lt=models.F("top")),
+                condition=models.Q(bottom__lt=models.F("top")),
                 name="top_above_bottom_upward",
             )
         ]
@@ -84,7 +84,16 @@ class VerticalInterval(GenericEarthSample):
     def save(self, *args, **kwargs):
         if self.top is not None and self.bottom is not None:
             self.vertical_depth = abs(self.bottom - self.top)
-        # self.depth = abs(self.bottom - self.top)
+        elif self.top is not None and self.vertical_depth is not None:
+            # If only top and vertical_depth are provided, calculate bottom
+            self.bottom = self.top + self.vertical_depth
+        elif self.bottom is not None and self.vertical_depth is not None:
+            # If only bottom and vertical_depth are provided, calculate top
+            self.top = self.bottom - self.vertical_depth
+        elif self.top is None and self.bottom is None and self.vertical_depth is not None:
+            # If only vertical_depth is provided, set top to 0 and calculate bottom
+            self.top = 0
+            self.bottom = self.vertical_depth
         super().save(*args, **kwargs)
 
 

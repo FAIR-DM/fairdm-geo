@@ -1,6 +1,6 @@
 # """Provides a specialized importer for samples with a location field."""
 
-# from fairdm.models import Sample
+# from fairdm.core.models import Sample
 # from fairdm_geo.location.models import Point
 
 

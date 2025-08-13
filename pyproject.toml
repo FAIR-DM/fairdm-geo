@@ -27,8 +27,8 @@ classifiers = [
 python = ">=3.11,<4.0"
 django = ">4"
 django-research-vocabs = {git = "https://github.com/SamuelJennings/django-research-vocabs"}
-pyproj = "^3.6.1"
-django-appconf = "^1.0.6"
+pyproj = "^3.7.1"
+django-appconf = "^1.1.0"
 fairdm = {git = "https://github.com/FAIR-DM/fairdm"}
 
 

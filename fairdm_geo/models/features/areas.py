@@ -1,7 +1,8 @@
 from django.utils.translation import gettext as _
+from fairdm.core.models import Sample
 from fairdm.db import models
 from fairdm.metadata import Metadata
-from fairdm.models import Sample
+
 from fairdm_geo.metadata import default_metadata
 from fairdm_geo.vocabularies.odm2 import (
     SamplingFeatureType,

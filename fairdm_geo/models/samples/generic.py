@@ -1,8 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext as _
+from fairdm.core.models import Sample
 from fairdm.db import models
-from fairdm.models import Sample
 
 
 class GenericEarthSample(Sample):

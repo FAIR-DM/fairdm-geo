@@ -12,7 +12,6 @@ Each configuration defines:
 """
 
 from django.utils.translation import gettext_lazy as _
-
 from fairdm import register
 from fairdm.registry import Authority, ModelConfiguration, ModelMetadata
 

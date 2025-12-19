@@ -6,11 +6,13 @@
 ![GitHub](https://img.shields.io/github/license/FAIR-DM/fairdm-earth-science)
 ![GitHub last commit](https://img.shields.io/github/last-commit/FAIR-DM/fairdm-earth-science)
 
-A comprehensive addon for the FairDM framework providing geoscience-specific data models, vocabularies, and visualization tools.
+A FairDM framework addon providing ready-to-use geoscience data models and controlled vocabularies for geological research projects.
 
 ## Features
 
 ### Geoscience Sample Models
+
+Concrete and abstract sample models ready to use in your projects:
 
 - **Rock Samples**: General rock specimens for geological analysis
 - **Drill Cores**: Core samples from drilling operations with stratigraphic information
@@ -25,15 +27,11 @@ A comprehensive addon for the FairDM framework providing geoscience-specific dat
 
 ### Controlled Vocabularies
 
-Integration with ODM2 (Observations Data Model 2) vocabularies:
+Pre-configured integration with ODM2 (Observations Data Model 2) vocabularies:
 - Medium types (rock, water, soil, etc.)
 - Sampling feature types (specimen, site, borehole)
 - Specimen types (core, cuttings, thin section, powder)
 - Site types and elevation datums
-
-### Visualization
-
-- **Interactive Maps**: Plotly-based map visualization of sample locations for Projects and Datasets
 
 ## Installation
 
@@ -49,55 +47,32 @@ fairdm.setup(
 )
 ```
 
+All geoscience models are automatically registered and available for use.
+
 ## Configuration
 
-### Enabling Sample Models
+### Customizing Available Models
 
-Configure which geoscience models should be registered as concrete models in your `settings.py`:
+By default, all geoscience sample models are registered as concrete models. You can customize which models are available by overriding the `EARTH_SAMPLES` setting:
 
 ```python
 # settings.py
 
 EARTH_SAMPLES = [
-    # Rock samples
+    # Include only the models you need
     "RockSample",
     "DrillCore",
-    "DrillCuttings",
-    "ThinSection",
-    "RockPowder",
-    # Sampling features
     "SamplingLocation",
-    "Borehole",
 ]
 ```
 
-Models not in this list will remain abstract base classes.
-
-### Geospatial Settings
-
-Configure coordinate precision and default CRS:
-
-```python
-# Default coordinate reference system (EPSG code or pyproj-compatible string)
-EARTH_SCIENCE_CRS = 4326
-
-# Coordinate field precision
-EARTH_SCIENCE_X_COORD = {
-    "decimal_places": 6,
-    "max_digits": None,
-}
-
-EARTH_SCIENCE_Y_COORD = {
-    "decimal_places": 6,
-    "max_digits": None,
-}
-```
+Models not in this list will remain abstract base classes that you can extend in your own apps.
 
 ## Usage
 
-### Creating Geoscience Samples
+### Working with Geoscience Samples
 
-The registered sample models work like standard FairDM samples with additional geoscience-specific fields:
+The registered sample models integrate seamlessly with FairDM's core functionality:
 
 ```python
 from fairdm_geo.models.samples import RockSample, DrillCore
@@ -120,26 +95,71 @@ sample = RockSample.objects.create(
     parent=site,
     status="available",
 )
+
+# Create a drill core with detailed information
+core = DrillCore.objects.create(
+    name="Core DC-001",
+    dataset=my_dataset,
+    parent=borehole,
+    status="available",
+    specimen_type="core",
+)
 ```
 
-### Using the Map Plugin
+### Using Controlled Vocabularies
 
-The Map plugin automatically appears in the plugin menu for Projects and Datasets that have samples with location data. It displays an interactive Plotly map showing sample locations, names, datasets, status, and coordinates.
+All models come with pre-configured ODM2 vocabulary fields:
+
+```python
+from fairdm_geo.models.samples import RockSample
+
+# Vocabularies are available as model fields
+sample = RockSample.objects.create(
+    name="Sample RS-002",
+    dataset=my_dataset,
+    medium="rock",  # From ODM2 Medium vocabulary
+    specimen_type="core",  # From ODM2 SpecimenType vocabulary
+)
+```
+
+### Extending Models
+
+You can extend the abstract base classes to create custom sample types:
+
+```python
+from fairdm_geo.models.samples import BaseRock
+
+class CustomRockType(BaseRock):
+    \"\"\"Custom rock sample with additional fields.\"\"\"
+    
+    custom_field = models.CharField(max_length=100)
+    
+    class Meta(BaseRock.Meta):
+        verbose_name = "Custom Rock Sample"
+```
 
 ## Model Hierarchy
 
 ```
 Sample (FairDM core)
-├── GenericEarthSample (fairdm_geo base)
-│   ├── BaseRock
-│   │   ├── RockSample
-│   │   ├── DrillCore
-│   │   ├── DrillCuttings
-│   │   ├── ThinSection
-│   │   └── RockPowder
-│   └── SamplingLocation
-│       └── Borehole
+└── GenericEarthSample (fairdm_geo base)
+    ├── BaseRock (abstract)
+    │   ├── RockSample
+    │   ├── DrillCore
+    │   ├── DrillCuttings
+    │   ├── ThinSection
+    │   └── RockPowder
+    └── SamplingLocation
+        └── Borehole
 ```
+
+All models inherit from FairDM's core `Sample` model, gaining standard features like:
+- Dataset association
+- Project hierarchies
+- Metadata tracking
+- Permissions system
+- Auto-generated admin interfaces
+- REST API endpoints (if enabled)
 
 ## Development
 
@@ -150,24 +170,26 @@ poetry run pytest
 poetry run pytest --cov  # With coverage
 ```
 
-### Modern API Implementation
+### Project Structure
 
-This addon uses the current FairDM API:
+```
+fairdm_geo/
+├── models/          # Model definitions
+│   ├── samples/     # Rock samples (RockSample, DrillCore, etc.)
+│   └── features/    # Sampling features (SamplingLocation, Borehole)
+├── config.py        # Model registrations with FairDM
+├── settings.py      # Addon configuration
+└── vocabularies/    # ODM2 vocabulary integration
+```
 
-**✅ Modern Features:**
-- `@register` decorator for model configuration
-- `ModelConfiguration` with `ModelMetadata`, `Authority`, and `Citation`
-- `@plugins.register(Model1, Model2)` for plugin registration
-- `plugins.FairDMPlugin` base class
-- `plugins.PluginMenuItem` with category system
-- `__fdm_setup_module__` addon setup pattern
-- Auto-discovery via `apps.py` `ready()` method
+## Contributing
 
-**❌ Removed Legacy Patterns:**
-- Old `@plugins.project.register()` decorator syntax
-- `plugins.Explore` and `ApplicationLayout` base classes
-- Dict-based `menu_item` configuration
-- Custom admin registration (now auto-generated)
+Contributions are welcome! This addon focuses on:
+- **Core models**: Reusable, well-documented geoscience sample types
+- **Vocabularies**: Integration with standard controlled vocabularies (ODM2, etc.)
+- **Documentation**: Clear examples and migration guides
+
+For visualization or analysis plugins, consider creating separate dedicated addons that depend on fairdm-geo.
 
 ## License
 
@@ -178,4 +200,5 @@ MIT License - see LICENSE file for details
 - **Repository**: https://github.com/FAIR-DM/fairdm-geo
 - **FairDM Framework**: https://github.com/FAIR-DM/fairdm
 - **Documentation**: https://fairdm.org
+- **ODM2 Vocabularies**: http://vocabulary.odm2.org/
 

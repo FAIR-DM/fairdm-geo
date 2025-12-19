@@ -1,4 +1,49 @@
-# FairDM Geo - Modernization Changelog
+# FairDM Geo - Changelog
+
+## Version 0.2.0 - Streamlined Focus (December 19, 2025)
+
+### 🎯 Focus Change
+
+Refocused fairdm-geo to be a **models and vocabularies addon** rather than a full-featured plugin collection. Visualization and analysis features will be developed as separate dedicated addons.
+
+### ❌ Removed
+
+- **Map Plugin**: Removed Plotly-based map visualization plugin
+  - Will be recreated as a separate dedicated addon with better features
+  - Deleted `plugins.py` implementation (replaced with placeholder)
+  - Deleted plugin templates directory
+  - Removed `plotly` dependency
+
+- **Geospatial Settings**: Removed unused coordinate configuration
+  - `CRS` setting (not used by models - FairDM core handles geospatial)
+  - `X_COORD` and `Y_COORD` precision settings (not used)
+  - Icon aliases (not used)
+
+- **Documentation**: Removed MIGRATION.md
+  - No longer highlighting legacy patterns
+  - Focus on current, clean API only
+
+### 🔧 Modified
+
+- **`plugins.py`**: Now a placeholder for future plugins
+- **`settings.py`**: Simplified to only `EARTH_SAMPLES` configuration
+- **`apps.py`**: Removed plugins import from `ready()` method
+- **README.md**: Complete rewrite focusing on:
+  - Models and vocabularies as core features
+  - Clear, concise usage examples
+  - No mention of legacy APIs or migration paths
+  - Project structure and contribution guidelines
+
+### 📋 Current Focus
+
+FairDM Geo now provides:
+- ✅ Ready-to-use geoscience sample models (RockSample, DrillCore, etc.)
+- ✅ Sampling feature models (SamplingLocation, Borehole)
+- ✅ ODM2 controlled vocabulary integration
+- ✅ Well-documented model hierarchy
+- ✅ Simple configuration via `EARTH_SAMPLES` setting
+
+Visualization plugins will be developed separately as dedicated addons.
 
 ## Version 0.1.0 - API Modernization (December 19, 2025)
 

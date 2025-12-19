@@ -7,9 +7,6 @@ class EarthScienceConfig(AppConfig):
     verbose_name = _("Earth Science")
 
     def ready(self):
-        """Import config and plugins modules to trigger model and plugin registration."""
+        """Import config module to trigger model registration."""
         # Import config module to register all geoscience models
         import fairdm_geo.config  # noqa: F401
-
-        # Import plugins module to register all plugins
-        import fairdm_geo.plugins  # noqa: F401

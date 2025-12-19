@@ -1,30 +1,16 @@
+"""Concrete rock sample models."""
+
 from django.utils.translation import gettext as _
 from research_vocabs.fields import ConceptField
 
-from fairdm_geo.utils import is_abstract
-from fairdm_geo.vocabularies.odm2 import Medium, SamplingFeatureType, SpecimenType
+from fairdm_geo.vocabularies.odm2 import SpecimenType
 
-from .generic import GenericEarthSample
-
-
-class BaseRock(GenericEarthSample):
-    feature_type = ConceptField(
-        vocabulary=SamplingFeatureType,
-        default="specimen",
-        editable=False,
-    )
-    medium = ConceptField(
-        verbose_name=_("medium"),
-        vocabulary=Medium,
-        default="rock",
-        editable=False,
-    )
-
-    class Meta:
-        abstract = True
+from .base import BaseRock
 
 
 class RockSample(BaseRock):
+    """A general rock specimen collected for geological analysis."""
+
     specimen_type = ConceptField(
         verbose_name=_("specimen"),
         vocabulary=SpecimenType,
@@ -33,37 +19,29 @@ class RockSample(BaseRock):
     )
 
     class Meta:
-        abstract = is_abstract("RockSample")
+        abstract = False
         verbose_name = _("rock sample")
         verbose_name_plural = _("rock samples")
 
 
 class DrillCore(BaseRock):
+    """Core samples obtained from drilling operations."""
+
     specimen_type = ConceptField(
         verbose_name=_("specimen"),
         vocabulary=SpecimenType,
-        # from_members=[
-        #     "core",
-        #     "coreHalfRound",
-        #     "corePiece",
-        #     "coreQuarterRound",
-        #     "coreSection",
-        #     "coreSectionHalf",
-        #     "coreSub-Piece",
-        #     "coreWholeRound",
-        #     "cuttings",
-        #     "orientedCore",
-        # ],
         default="core",
     )
 
     class Meta:
-        abstract = is_abstract("DrillCore")
+        abstract = False
         verbose_name = _("drill core")
         verbose_name_plural = _("drill cores")
 
 
 class DrillCuttings(BaseRock):
+    """Rock fragments produced during drilling operations."""
+
     specimen_type = ConceptField(
         verbose_name=_("specimen"),
         vocabulary=SpecimenType,
@@ -72,12 +50,14 @@ class DrillCuttings(BaseRock):
     )
 
     class Meta:
-        abstract = is_abstract("DrillCuttings")
-        verbose_name = _("rock sample")
-        verbose_name_plural = _("rock samples")
+        abstract = False
+        verbose_name = _("drill cuttings")
+        verbose_name_plural = _("drill cuttings")
 
 
 class ThinSection(BaseRock):
+    """Thin slices of rock mounted on glass slides for microscopic examination."""
+
     ALLOWED_PARENTS = ["fairdm_geo.RockSample"]
 
     specimen_type = ConceptField(
@@ -88,12 +68,14 @@ class ThinSection(BaseRock):
     )
 
     class Meta:
-        abstract = is_abstract("ThinSection")
+        abstract = False
         verbose_name = _("thin section")
         verbose_name_plural = _("thin sections")
 
 
 class RockPowder(BaseRock):
+    """Finely ground rock samples prepared for geochemical analysis."""
+
     ALLOWED_PARENTS = ["RockSample"]
 
     specimen_type = ConceptField(
@@ -104,6 +86,6 @@ class RockPowder(BaseRock):
     )
 
     class Meta:
-        abstract = is_abstract("RockPowder")
+        abstract = False
         verbose_name = _("rock powder")
         verbose_name_plural = _("rock powders")

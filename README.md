@@ -10,9 +10,19 @@ A FairDM framework addon providing ready-to-use geoscience data models and contr
 
 ## Features
 
+### Modular Multi-App Architecture
+
+FairDM Geo is organized into separate Django apps for maximum flexibility:
+
+- **`fairdm_geo.core`** - Abstract base models (GenericEarthSample, GenericHole, intervals)
+- **`fairdm_geo.rocks`** - Rock sample models (RockSample, DrillCore, ThinSection, etc.)
+- **`fairdm_geo.sites`** - Sampling location models (SamplingLocation, Borehole)
+
+Install only the apps you need for your project.
+
 ### Geoscience Sample Models
 
-Concrete and abstract sample models ready to use in your projects:
+Concrete sample models ready to use in your projects:
 
 - **Rock Samples**: General rock specimens for geological analysis
 - **Drill Cores**: Core samples from drilling operations with stratigraphic information
@@ -43,30 +53,45 @@ import fairdm
 
 fairdm.setup(
     apps=["your_app"],
-    addons=["fairdm_geo"],
+    addons=[
+        "fairdm_geo.core",   # Required - provides abstract base models
+        "fairdm_geo.rocks",  # Optional - rock sample models
+        "fairdm_geo.sites",  # Optional - sampling location models
+    ],
 )
 ```
 
 All geoscience models are automatically registered and available for use.
 
-## Configuration
+### Selective Installation
 
-### Customizing Available Models
-
-By default, all geoscience sample models are registered as concrete models. You can customize which models are available by overriding the `EARTH_SAMPLES` setting:
+Install only the apps you need:
 
 ```python
-# settings.py
+# Just rock samples, no sampling locations
+fairdm.setup(
+    apps=["your_app"],
+    addons=[
+        "fairdm_geo.core",
+        "fairdm_geo.rocks",
+    ],
+)
 
-EARTH_SAMPLES = [
-    # Include only the models you need
-    "RockSample",
-    "DrillCore",
-    "SamplingLocation",
-]
+# Just sampling locations, no rock samples  
+fairdm.setup(
+    apps=["your_app"],
+    addons=[
+        "fairdm_geo.core",
+        "fairdm_geo.sites",
+    ],
+)
 ```
 
-Models not in this list will remain abstract base classes that you can extend in your own apps.
+## Configuration
+
+No configuration required! All models are concrete and ready to use out of the box.
+
+The old `EARTH_SAMPLES` setting is no longer needed - models are always concrete.
 
 ## Usage
 
@@ -75,8 +100,8 @@ Models not in this list will remain abstract base classes that you can extend in
 The registered sample models integrate seamlessly with FairDM's core functionality:
 
 ```python
-from fairdm_geo.models.samples import RockSample, DrillCore
-from fairdm_geo.models.features import SamplingLocation, Borehole
+from fairdm_geo.rocks.models import RockSample, DrillCore
+from fairdm_geo.sites.models import SamplingLocation, Borehole
 
 # Create a sampling location
 site = SamplingLocation.objects.create(

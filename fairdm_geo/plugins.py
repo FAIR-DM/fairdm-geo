@@ -7,4 +7,3 @@ Visualization plugins (e.g., map viewers) will be developed as separate dedicate
 """
 
 # Future plugins will be registered here
-

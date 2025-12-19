@@ -1,5 +1,88 @@
 # FairDM Geo - Changelog
 
+## Version 0.3.0 - Multi-App Architecture (December 19, 2025)
+
+### 🏗️ Breaking Changes - Complete Restructuring
+
+Restructured from a single Django app to a multi-app architecture following Django best practices.
+
+#### New Structure
+
+**Apps:**
+- `fairdm_geo.core` - Abstract base models (GenericEarthSample, GenericHole, intervals)
+- `fairdm_geo.rocks` - Concrete rock sample models (RockSample, DrillCore, etc.)
+- `fairdm_geo.sites` - Concrete sampling location models (SamplingLocation, Borehole)
+
+**Installation:**
+```python
+INSTALLED_APPS = [
+    ...
+    "fairdm_geo.core",
+    "fairdm_geo.rocks", 
+    "fairdm_geo.sites",
+]
+```
+
+### ❌ Removed (Breaking)
+
+- **EARTH_SAMPLES setting**: No longer needed - models are always concrete
+- **utils.is_abstract()**: Removed anti-pattern of dynamic `abstract` status
+- **Single config.py**: Split into separate config modules per app
+- **Single settings.py**: Each app now has its own settings (currently minimal)
+- **models/ directory**: Models moved to app-specific locations
+
+### ✨ Added
+
+- **Core app** (`fairdm_geo.core`):
+  - Abstract base models in `core/models/base.py`
+  - All interval classes (Interval, VerticalInterval, GeoDepthInterval)
+  - GenericEarthSample and GenericHole base classes
+
+- **Rocks app** (`fairdm_geo.rocks`):
+  - BaseRock abstract model
+  - 5 concrete models: RockSample, DrillCore, DrillCuttings, ThinSection, RockPowder
+  - Dedicated config.py with model registrations
+  - App dependency checking (requires core)
+
+- **Sites app** (`fairdm_geo.sites`):
+  - 2 concrete models: SamplingLocation, Borehole
+  - Dedicated config.py with model registrations
+  - App dependency checking (requires core)
+
+- **MIGRATION_GUIDE.md**: Complete migration guide from v0.2.0 to v0.3.0
+
+### 🔧 Modified
+
+- **Static abstract flags**: All models now have `abstract = False` (concrete) or `abstract = True` (base classes)
+  - No more dynamic abstract status based on settings
+  - Stable migrations that don't break when configuration changes
+
+- **Backward compatibility**:
+  - `fairdm_geo/__init__.py` exports models for old import paths
+  - `fairdm_geo/apps.py` shows deprecation warning but still works
+  - Old imports like `from fairdm_geo.models import RockSample` still work
+
+- **App dependencies**: Each app checks for required dependencies in `ready()` method
+  - Rocks and Sites require Core to be installed first
+  - Clear error messages if dependencies missing
+
+### 📚 Benefits
+
+1. **Stable Migrations**: Models always have same abstract status, no migration chaos
+2. **Selective Installation**: Install only apps you need (e.g., just rocks)
+3. **Clear Dependencies**: Explicit app installation in INSTALLED_APPS
+4. **Django Best Practices**: Standard patterns, better IDE support
+5. **Domain-Driven**: Separate apps for rocks vs sites makes sense conceptually
+
+### 📋 Migration Steps
+
+See MIGRATION_GUIDE.md for complete instructions. Summary:
+
+1. Replace `"fairdm_geo"` in INSTALLED_APPS with three apps
+2. Remove EARTH_SAMPLES setting
+3. Run new migrations for each app
+4. Optionally update imports to use new paths
+
 ## Version 0.2.0 - Streamlined Focus (December 19, 2025)
 
 ### 🎯 Focus Change

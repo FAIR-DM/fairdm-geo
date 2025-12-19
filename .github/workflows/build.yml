@@ -53,7 +53,7 @@ jobs:
           poetry run bandit -r fairdm_geo/ -f json -o bandit-report.json || true
 
       - name: Upload bandit report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: bandit-report
@@ -65,7 +65,7 @@ jobs:
           poetry run safety check --json --output safety-report.json || true
 
       - name: Upload safety report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: safety-report
@@ -89,7 +89,7 @@ jobs:
         run: poetry check
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: dist
           path: dist/

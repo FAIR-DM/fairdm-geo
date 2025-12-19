@@ -1,6 +1,21 @@
-{% extends "base.html" %}
-{% block content %}
-  <c-layouts.standard>
-  <div class="h-100 w-100">{{ plot|safe }}</div>
-  </c-layouts.standard>
-{% endblock content %}
+{% extends "fairdm/plugin.html" %}
+
+{% block plugin %}
+  <div class="map-plugin">
+    {% if plot %}
+      <div class="mb-3">
+        <p class="text-muted">
+          Showing {{ sample_count }} sample{{ sample_count|pluralize }} with location data
+        </p>
+      </div>
+      <div class="map-container h-100 w-100">
+        {{ plot|safe }}
+      </div>
+    {% else %}
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle me-2"></i>
+        No samples with location data found for this {{ base_object|lower }}.
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

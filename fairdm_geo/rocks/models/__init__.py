@@ -5,9 +5,9 @@ from .samples import DrillCore, DrillCuttings, RockPowder, RockSample, ThinSecti
 
 __all__ = [
     "BaseRock",
-    "RockSample",
     "DrillCore",
     "DrillCuttings",
-    "ThinSection",
     "RockPowder",
+    "RockSample",
+    "ThinSection",
 ]

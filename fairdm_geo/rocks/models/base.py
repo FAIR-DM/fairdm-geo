@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 from research_vocabs.fields import ConceptField
 
 from fairdm_geo.core.models import GenericEarthSample
-from fairdm_geo.vocabularies.odm2 import Medium, SamplingFeatureType, SpecimenType
+from fairdm_geo.vocabularies.odm2 import Medium, SamplingFeatureType
 
 
 class BaseRock(GenericEarthSample):

@@ -1,10 +1,10 @@
 """Concrete sampling location and borehole models."""
 
 from django.utils.translation import gettext as _
+from fairdm.db.models import QuantityField
 from research_vocabs.fields import ConceptField
 
-from fairdm.db.models import QuantityField
-from fairdm_geo.core.models import GeoDepthInterval, GenericEarthSample, GenericHole
+from fairdm_geo.core.models import GenericEarthSample, GenericHole, GeoDepthInterval
 from fairdm_geo.vocabularies.odm2 import ElevationDatum, SiteType
 
 

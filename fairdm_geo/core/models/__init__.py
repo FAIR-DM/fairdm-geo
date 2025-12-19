@@ -1,9 +1,9 @@
 """Core abstract models for earth science data."""
 
 from .base import (
-    GeoDepthInterval,
     GenericEarthSample,
     GenericHole,
+    GeoDepthInterval,
     Interval,
     VerticalDepthInterval,
     VerticalInterval,
@@ -12,8 +12,8 @@ from .base import (
 __all__ = [
     "GenericEarthSample",
     "GenericHole",
-    "Interval",
-    "VerticalInterval",
-    "VerticalDepthInterval",
     "GeoDepthInterval",
+    "Interval",
+    "VerticalDepthInterval",
+    "VerticalInterval",
 ]

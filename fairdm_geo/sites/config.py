@@ -42,8 +42,6 @@ class SamplingLocationConfig(ModelConfiguration):
         "type",
         "status",
         "location",
-        "latitude",
-        "longitude",
         "elevation",
         "elevation_datum",
     ]
@@ -74,8 +72,6 @@ class BoreholeConfig(ModelConfiguration):
         "type",
         "status",
         "location",
-        "latitude",
-        "longitude",
         "elevation",
         "elevation_datum",
         "azimuth",

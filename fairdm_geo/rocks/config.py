@@ -42,7 +42,6 @@ class RockSampleConfig(ModelConfiguration):
         "feature_type",
         "medium",
         "specimen_type",
-        "parent",
     ]
 
     exclude = ["polymorphic_ctype"]
@@ -69,7 +68,6 @@ class DrillCoreConfig(ModelConfiguration):
         "dataset",
         "status",
         "specimen_type",
-        "parent",
     ]
 
     exclude = ["polymorphic_ctype", "feature_type", "medium"]
@@ -95,7 +93,6 @@ class DrillCuttingsConfig(ModelConfiguration):
         "local_id",
         "dataset",
         "status",
-        "parent",
     ]
 
     exclude = ["polymorphic_ctype", "feature_type", "medium", "specimen_type"]
@@ -121,7 +118,6 @@ class ThinSectionConfig(ModelConfiguration):
         "local_id",
         "dataset",
         "status",
-        "parent",
     ]
 
     exclude = ["polymorphic_ctype", "feature_type", "medium", "specimen_type"]
@@ -147,7 +143,6 @@ class RockPowderConfig(ModelConfiguration):
         "local_id",
         "dataset",
         "status",
-        "parent",
     ]
 
     exclude = ["polymorphic_ctype", "feature_type", "medium", "specimen_type"]

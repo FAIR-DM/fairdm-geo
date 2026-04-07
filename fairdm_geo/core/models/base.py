@@ -2,6 +2,7 @@
 
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models as dj_models
 from django.utils.translation import gettext as _
 from fairdm.core.models import Sample
 from fairdm.db import models
@@ -20,11 +21,11 @@ class GenericEarthSample(Sample):
         verbose_name_plural = _("generic earth samples")
 
 
-class GenericHole(GenericEarthSample):
+class GenericHole(dj_models.Model):
     """
-    A generic hole is a sample type created when drilling/probing into another sample,
-    typically for the purpose of creating child samples. Use this abstract model in order
-    to record information about how certain samples were collected.
+    A pure field mixin for hole geometry. Does not inherit Sample lineage;
+    concrete subclasses should also inherit from GenericEarthSample or a concrete
+    Sample-based model (e.g. SamplingLocation) to register as a Sample type.
     E.g. samples from a borehole.
     """
 
@@ -82,13 +83,11 @@ class Interval(GenericEarthSample):
         verbose_name_plural = _("intervals")
 
 
-class VerticalInterval(GenericEarthSample):
+class VerticalInterval(dj_models.Model):
     """
-    A general vertical interval is a defined range within a vertical column, bounded by a
-    top and bottom measurement, where both measurements are positive in the upward direction,
-    relative to a specified reference point. This interval can span any physical medium,
-    including air, water, or earth, and is used to represent a discrete section within that
-    medium for the purpose of sampling, observation, or analysis.
+    A pure field mixin for a vertical interval defined by top and bottom measurements.
+    Does not inherit Sample lineage; concrete subclasses should also inherit from
+    GenericEarthSample or a concrete Sample-based model to register as a Sample type.
     """
 
     top = models.QuantityField(

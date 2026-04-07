@@ -5,8 +5,12 @@ import fairdm
 fairdm.setup(
     apps=[
         "fairdm_geo",
+        "fairdm_geo.core",
+        "fairdm_geo.sites",
+        "fairdm_geo.rocks",
         "fairdm_geo.geology.geologic_time",
         "fairdm_geo.geology.lithology",
+        "fairdm_geo.geology.stratigraphy",
         "example",
     ],
 )

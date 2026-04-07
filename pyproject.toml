@@ -6,8 +6,18 @@ authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/FAIR-DM/fairdm-geo"
-packages = [{include = "fairdm_geo"}]
-keywords = ["science", "research", "django", "geoluminate", "geology", "geoscience", "earth science", "open data", "FAIR"]
+packages = [{ include = "fairdm_geo" }]
+keywords = [
+    "science",
+    "research",
+    "django",
+    "geoluminate",
+    "geology",
+    "geoscience",
+    "earth science",
+    "open data",
+    "FAIR",
+]
 
 classifiers = [
     "Development Status :: 1 - Development",
@@ -24,20 +34,19 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<4.0"
+python = ">=3.13,<4.0"
 django = ">4"
-django-research-vocabs = {git = "https://github.com/SamuelJennings/django-research-vocabs"}
+django-research-vocabs = { git = "https://github.com/SamuelJennings/django-research-vocabs" }
 pyproj = "^3.7.1"
 django-appconf = "^1.1.0"
-fairdm = {git = "https://github.com/FAIR-DM/fairdm"}
+fairdm = { git = "https://github.com/FAIR-DM/fairdm" }
 
 
 [tool.poetry.group.dev.dependencies]
-fairdm-dev-tools = {git = "https://github.com/FAIR-DM/dev-tools"}
-
-
-[tool.poetry.group.docs.dependencies]
-geoluminate-docs = {git = "https://github.com/FAIR-DM/fairdm-docs"}
+fairdm-dev-tools = { git = "https://github.com/FAIR-DM/dev-tools", extras = [
+    "test",
+    "dev",
+] }
 
 [build-system]
 requires = ["poetry-core"]
@@ -62,7 +71,7 @@ check_untyped_defs = "False"
 warn_return_any = "True"
 warn_unused_ignores = "True"
 show_error_codes = "True"
-exclude = ["docs/","migrations/","tests/settings.py"] 
+exclude = ["docs/", "migrations/", "tests/settings.py"]
 mypy_path = "geoscience/"
 plugins = ["mypy_django_plugin.main"]
 
@@ -94,7 +103,8 @@ select = [
     # mccabe
     "C90",
     # pycodestyle
-    "E", "W",
+    "E",
+    "W",
     # pyflakes
     "F",
     # pygrep-hooks
@@ -115,28 +125,21 @@ ignore = [
 ]
 
 [tool.ruff.per-file-ignores]
-"tests/*" = ["S101","S105"]
+"tests/*" = ["S101", "S105"]
 # "**/models.py" = ["A003",]
 # "docs/conf.py" = ["*"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
 # python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
-filterwarnings = [
-    "ignore",
-    "default:::geoscience",
-]
+filterwarnings = ["ignore", "default:::geoscience"]
 
-# 
+#
 
 
 [tool.coverage.report]
 skip_empty = true
-omit = [
-    "*site-packages*",
-    "*tests*",
-    "*.tox*",
-    ]
+omit = ["*site-packages*", "*tests*", "*.tox*"]
 show_missing = "true"
 
 [tool.coverage.run]
@@ -145,13 +148,8 @@ source = ["geoscience"]
 
 
 [tool.deptry]
-extend_exclude = [
-    "tasks.py",
-    "docs/"
-]
-ignore_transitive = [
-    "toml",
-]
+extend_exclude = ["tasks.py", "docs/"]
+ignore_transitive = ["toml"]
 
 
 [tool.tox]
@@ -166,7 +164,7 @@ python =
     3.9: py39
     3.10: py310
     3.11: py311
-    
+
 [testenv]
 passenv = PYTHON_VERSION
 allowlist_externals = poetry
@@ -175,4 +173,3 @@ commands =
     pytest --doctest-modules tests --cov --cov-config=pyproject.toml --cov-report=xml
     mypy
 """
-

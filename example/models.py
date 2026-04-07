@@ -1,4 +1,4 @@
-from fairdm_geo.models.features import SamplingLocation
+from fairdm_geo.sites.models import SamplingLocation
 
 
 class GenericSite(SamplingLocation):

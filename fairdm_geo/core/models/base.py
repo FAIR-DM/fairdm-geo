@@ -166,7 +166,7 @@ class VerticalDepthInterval(VerticalInterval):
         # positive in the downward direction.
         constraints = [
             models.CheckConstraint(
-                check=models.Q(bottom__gt=models.F("top")),
+                condition=models.Q(bottom__gt=models.F("top")),
                 name="top_above_bottom",
             )
         ]

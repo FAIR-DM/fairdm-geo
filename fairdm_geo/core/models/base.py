@@ -21,14 +21,15 @@ class GenericEarthSample(Sample):
 
 
 class GenericHole(dj_models.Model):
-    """
-    A pure field mixin for hole geometry. Does not inherit Sample lineage;
+    """A pure field mixin for hole geometry.
+
+    Does not inherit Sample lineage;
     concrete subclasses should also inherit from GenericEarthSample or a concrete
     Sample-based model (e.g. SamplingLocation) to register as a Sample type.
     E.g. samples from a borehole.
     """
 
-    HOLE_MAX_LENGTH = None
+    HOLE_MAX_LENGTH: int | None = None
 
     azimuth = models.QuantityField(
         base_units="deg",
@@ -41,7 +42,9 @@ class GenericHole(dj_models.Model):
     inclination = models.QuantityField(
         base_units="deg",
         verbose_name=_("inclination"),
-        help_text=_("The vertical angle relative to the horizontal plane where 90 is true vertical."),
+        help_text=_(
+            "The vertical angle relative to the horizontal plane where 90 is true vertical."
+        ),
         validators=[MinValueValidator(0), MaxValueValidator(90)],
         blank=True,
         null=True,
@@ -62,9 +65,13 @@ class GenericHole(dj_models.Model):
 
     def clean(self):
         """Validate that hole length doesn't exceed maximum if defined."""
-        if self.length and self.HOLE_MAX_LENGTH and self.length.magnitude > self.HOLE_MAX_LENGTH:
+        if (
+            self.length
+            and self.HOLE_MAX_LENGTH
+            and self.length.magnitude > self.HOLE_MAX_LENGTH
+        ):
             msg = f"Length of hole ({self.length}) exceeds maximum length ({self.HOLE_MAX_LENGTH} m)."
-            raise ValidationError(msg)
+            raise ValidationError(msg, code="hole_too_long")
         super().clean()
 
 
@@ -83,8 +90,8 @@ class Interval(GenericEarthSample):
 
 
 class VerticalInterval(dj_models.Model):
-    """
-    A pure field mixin for a vertical interval defined by top and bottom measurements.
+    """A pure field mixin for a vertical interval defined by top and bottom measurements.
+
     Does not inherit Sample lineage; concrete subclasses should also inherit from
     GenericEarthSample or a concrete Sample-based model to register as a Sample type.
     """
@@ -92,14 +99,18 @@ class VerticalInterval(dj_models.Model):
     top = models.QuantityField(
         base_units="m",
         verbose_name=_("top"),
-        help_text=_("The distance to the top of the vertical interval relative to the vertical datum."),
+        help_text=_(
+            "The distance to the top of the vertical interval relative to the vertical datum."
+        ),
         blank=True,
         null=True,
     )
     bottom = models.QuantityField(
         base_units="m",
         verbose_name=_("bottom"),
-        help_text=_("The distance to the bottom of the vertical interval relative to the vertical datum."),
+        help_text=_(
+            "The distance to the bottom of the vertical interval relative to the vertical datum."
+        ),
         blank=True,
         null=True,
     )
@@ -133,7 +144,7 @@ class VerticalInterval(dj_models.Model):
         constraints = [
             models.CheckConstraint(
                 condition=models.Q(bottom__lt=models.F("top")),
-                name="top_above_bottom_upward",
+                name="%(app_label)s_%(class)s_top_above_bottom_upward",
             )
         ]
 
@@ -147,7 +158,9 @@ class VerticalInterval(dj_models.Model):
         elif self.bottom is not None and self.vertical_depth is not None:
             # If only bottom and vertical_depth are provided, calculate top
             self.top = self.bottom - self.vertical_depth
-        elif self.top is None and self.bottom is None and self.vertical_depth is not None:
+        elif (
+            self.top is None and self.bottom is None and self.vertical_depth is not None
+        ):
             # If only vertical_depth is provided, set top to 0 and calculate bottom
             self.top = 0
             self.bottom = self.vertical_depth
@@ -166,7 +179,7 @@ class VerticalDepthInterval(VerticalInterval):
         constraints = [
             models.CheckConstraint(
                 condition=models.Q(bottom__gt=models.F("top")),
-                name="top_above_bottom",
+                name="%(app_label)s_%(class)s_top_above_bottom",
             )
         ]
 
@@ -195,7 +208,7 @@ class GeoDepthInterval(VerticalDepthInterval):
         blank=True,
     )
 
-    class Meta:
+    class Meta(VerticalDepthInterval.Meta):
         abstract = True
         verbose_name = _("geological depth interval")
         verbose_name_plural = _("geological depth intervals")

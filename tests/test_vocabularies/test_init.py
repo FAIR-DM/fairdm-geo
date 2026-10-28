@@ -49,7 +49,9 @@ class TestShippedVocabularies:
         monkeypatch.setattr(socket.socket, "connect", refuse)
         ConceptScheme.objects.filter(uri__in=[v.uri for v in SHIPPED.values()]).delete()
 
-        call_command("sync_vocabularies", *[v.uri for v in SHIPPED.values()], verbosity=0)
+        call_command(
+            "sync_vocabularies", *[v.uri for v in SHIPPED.values()], verbosity=0
+        )
 
         loaded = set(ConceptScheme.objects.values_list("uri", flat=True))
         assert {v.uri for v in SHIPPED.values()} <= loaded

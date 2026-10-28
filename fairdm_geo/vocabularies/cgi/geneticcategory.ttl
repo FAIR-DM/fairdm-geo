@@ -396,4 +396,3 @@
     skos:definition "Formation predominantly by the physical, chemical or biological alteration of rock or sediment at or near the Earth surface, connotes involvement of processes related to the atmosphere (weather...)."@en ;
     skos:inScheme <http://resource.geosciml.org/classifierscheme/cgi/2016.01/geneticcategory> ;
     skos:prefLabel "weathering genesis"@en .
-

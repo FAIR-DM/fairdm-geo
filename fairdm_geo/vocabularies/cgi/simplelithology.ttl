@@ -5342,4 +5342,3 @@
     skos:note "Distinction from mudstone is based on inference that less that 50 percent of the mud size fraction (matrix) is original mud size detrital particles. May also grade into diamictite or conglomerate based on size distribution of discernible particles. If more than 50 percent of rock is detrital particles of intrabasinal orgin and carbonate composition, categorize as carbonate wackestone. Term is typically applied to diagenetically altered volcanic-lithic clastic rocks in which the definition of the original clasts has been obscured. Suggested boundaries between wacke and arenite range from 5 to 15 percent matrix. See Dickinson (1970) for discussion of interpretation of undiscernible matrix in diagenetically altered lithic clastic rocks. Dickinson, W.R., 1970, Interpreting detrital modes of graywacke and arkose: Journal of Sedimentary Petrology, v. 40, p. 695-707."@en ;
     skos:prefLabel "wacke"@en,
         "piedra"@es .
-

@@ -212,4 +212,3 @@
     skos:narrower <http://resource.geosciml.org/classifier/cgi/stratigraphicrank/sequence> ;
     skos:prefLabel "supersequence"@en ;
     skos:related <http://resource.geosciml.org/classifier/cgi/stratigraphicrank/suite> .
-

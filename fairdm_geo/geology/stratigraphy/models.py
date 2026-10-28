@@ -1,3 +1,5 @@
+"""Models for stratigraphic units."""
+
 from controlled_vocabularies.fields import ConceptField
 from django.db import models
 from django.utils.translation import gettext as _

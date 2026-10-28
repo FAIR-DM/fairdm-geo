@@ -15,7 +15,7 @@ from fairdm_geo.vocabularies import (
 from .base import BaseRock
 
 
-def specimen_type_field(default, *, editable=False):
+def specimen_type_field(default: str, *, editable: bool = False) -> ConceptField:
     """Build the specimen type field of a rock sample model.
 
     Args:

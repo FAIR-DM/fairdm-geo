@@ -18,7 +18,7 @@ Restructured from a single Django app to a multi-app architecture following Djan
 INSTALLED_APPS = [
     ...
     "fairdm_geo.core",
-    "fairdm_geo.rocks", 
+    "fairdm_geo.rocks",
     "fairdm_geo.sites",
 ]
 ```
@@ -142,7 +142,7 @@ This release completely modernizes fairdm-geo to align with the current FairDM f
   - `EARTH_SAMPLES` list for model registration control
   - Geospatial configuration (`CRS`, `X_COORD`, `Y_COORD`)
   - Icon aliases for geoscience UI elements
-  
+
 #### Model Configuration System
 - **`config.py`**: New model registration system using modern FairDM API
   - 7 model configurations with `@register` decorator
@@ -201,12 +201,12 @@ This release completely modernizes fairdm-geo to align with the current FairDM f
 ### 🔧 Modified
 
 #### Core Files
-- **`utils.py`**: 
+- **`utils.py`**:
   - Converted lambda functions to proper documented functions
   - Updated to import from `fairdm_geo.settings` instead of Django settings
   - Added type hints and docstrings
 
-- **`metadata.py`**: 
+- **`metadata.py`**:
   - Marked as deprecated with clear migration instructions
   - Retained for backwards compatibility reference
   - Points to `config.py` for current metadata definitions

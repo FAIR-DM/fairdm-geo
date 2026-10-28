@@ -77,7 +77,7 @@ fairdm.setup(
     ],
 )
 
-# Just sampling locations, no rock samples  
+# Just sampling locations, no rock samples
 fairdm.setup(
     apps=["your_app"],
     addons=[
@@ -156,9 +156,9 @@ from fairdm_geo.models.samples import BaseRock
 
 class CustomRockType(BaseRock):
     \"\"\"Custom rock sample with additional fields.\"\"\"
-    
+
     custom_field = models.CharField(max_length=100)
-    
+
     class Meta(BaseRock.Meta):
         verbose_name = "Custom Rock Sample"
 ```
@@ -226,4 +226,3 @@ MIT License - see LICENSE file for details
 - **FairDM Framework**: https://github.com/FAIR-DM/fairdm
 - **Documentation**: https://fairdm.org
 - **ODM2 Vocabularies**: http://vocabulary.odm2.org/
-

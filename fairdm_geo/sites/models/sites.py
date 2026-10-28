@@ -14,8 +14,8 @@ from fairdm_geo.vocabularies import (
 
 
 class SamplingLocation(GenericEarthSample):
-    """
-    A sampling location represents a specific geographic point where samples are collected.
+    """A sampling location represents a specific geographic point where samples are collected.
+
     Includes precise coordinates, elevation data, and site characteristics that enable
     reproducible sampling and accurate data interpretation within geographical context.
     """
@@ -32,7 +32,9 @@ class SamplingLocation(GenericEarthSample):
 
     elevation_datum = ConceptField(
         verbose_name=_("elevation datum"),
-        help_text=_("The reference point for the elevation measurement, such as Mean Sea Level (MSL)."),
+        help_text=_(
+            "The reference point for the elevation measurement, such as Mean Sea Level (MSL)."
+        ),
         vocabulary=ODM2_ELEVATION_DATUM,
         default=ELEVATION_DATUM_MSL,
         related_name="+",
@@ -44,7 +46,9 @@ class SamplingLocation(GenericEarthSample):
         unit_choices=["m", "ft"],
         null=True,
         blank=True,
-        help_text=_("The site elevation in meters with reference to the specified elevation datum."),
+        help_text=_(
+            "The site elevation in meters with reference to the specified elevation datum."
+        ),
     )
 
     class Meta:
@@ -54,15 +58,15 @@ class SamplingLocation(GenericEarthSample):
 
 
 class Borehole(GeoDepthInterval, GenericHole, SamplingLocation):
-    """
-    A borehole represents a drilled hole in the ground used for subsurface investigation,
-    sampling, or monitoring. Includes detailed geometry (azimuth, inclination, length)
-    and serves as a container for depth-based sampling and measurements.
+    """A drilled hole in the ground used for subsurface investigation, sampling or monitoring.
+
+    Includes detailed geometry (azimuth, inclination, length) and serves as a container for
+    depth-based sampling and measurements.
     """
 
     HOLE_MAX_LENGTH = 12262  # meters (Kola Superdeep Borehole)
 
-    class Meta:
+    class Meta(GeoDepthInterval.Meta):
         abstract = False
         verbose_name = _("borehole")
         verbose_name_plural = _("boreholes")

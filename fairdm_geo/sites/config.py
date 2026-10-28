@@ -1,5 +1,4 @@
-"""
-Model Configuration for Sampling Locations
+"""Model Configuration for Sampling Locations.
 
 This module registers all sampling location models with the FairDM framework
 using the modern @register decorator and ModelConfiguration system.

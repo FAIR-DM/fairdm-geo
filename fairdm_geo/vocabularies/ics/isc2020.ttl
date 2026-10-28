@@ -2724,7 +2724,7 @@ isc:BaseLatePleistocene
 isc:BaseLatePleistoceneTime
   a time:TimePosition ;
   dct:replaces isc:BaseUpperPleistoceneTime ;
-  skos:changeNote """2020/01 -         - Quaternary: numeric age Base Late Pleistocene (Subseries / unnamed Stage) changed to 129 ka (was 126 ka) - by request of SQS (Martin Head), anticipating renewed GSSP-candidate locality search. The age sought is near the mid-point of Termination II in the marine isotope stratigraphy. 
+  skos:changeNote """2020/01 -         - Quaternary: numeric age Base Late Pleistocene (Subseries / unnamed Stage) changed to 129 ka (was 126 ka) - by request of SQS (Martin Head), anticipating renewed GSSP-candidate locality search. The age sought is near the mid-point of Termination II in the marine isotope stratigraphy.
 """ ;
   time:hasTRS <http://resource.geosciml.org/classifier/cgi/geologicage/bp> ;
   time:numericPosition "129000"^^xsd:decimal ;
@@ -2732,7 +2732,7 @@ isc:BaseLatePleistoceneTime
 isc:BaseLatePleistoceneTimeMA
   a time:TimePosition ;
   dct:replaces isc:BaseUpperPleistoceneTime ;
-  skos:changeNote """2020/01 -         - Quaternary: numeric age Base Late Pleistocene (Subseries / unnamed Stage) changed to 129 ka (was 126 ka) - by request of SQS (Martin Head), anticipating renewed GSSP-candidate locality search. The age sought is near the mid-point of Termination II in the marine isotope stratigraphy. 
+  skos:changeNote """2020/01 -         - Quaternary: numeric age Base Late Pleistocene (Subseries / unnamed Stage) changed to 129 ka (was 126 ka) - by request of SQS (Martin Head), anticipating renewed GSSP-candidate locality search. The age sought is near the mid-point of Termination II in the marine isotope stratigraphy.
 """ ;
   time:hasTRS <http://resource.geosciml.org/classifier/cgi/geologicage/ma> ;
   time:numericPosition 0.129 ;
@@ -14561,10 +14561,10 @@ renamed *[GS]SP individuals to *SP;
 removed all boundaries as TopConcepts, leaving on PreCambrian and Phanerozoic as TopConcepts"""@en ;
   skos:changeNote "2017/02 - Paleogene: Base of Chattian: The numeric age is updated to that at the ratified GSSP (27.82 Ma; Nanno et al. exp. 2017; by request of Simonetti Monechi)"@en ;
   skos:changeNote "2018-09-27 fixed some broken namespaces and prefixes, mostly related to SPARQL - some kind of search/replace error"@en ;
-  skos:changeNote """2019-05-01 - Updated to 2018-08 version; 
-removed StratigraphicPoints, Ranks, TimePositions collections; 
+  skos:changeNote """2019-05-01 - Updated to 2018-08 version;
+removed StratigraphicPoints, Ranks, TimePositions collections;
 nested sub-collections in GeochronologicEra"""@en ;
-  skos:changeNote """2019-06-10 - This revision adjusts the nomenclature of units to use only chronologic terminology rather than stratigraphic terminology [e.g. Cambrian-Age 2 in place of Cambrian-Stage 2; Cambrian-Epoch 2 in place of Cambrian-Series 2; Early/Late in place of Lower/Upper (namely in application to Epoch/time units rather than their equivalent Series/stratigraphic units—e.g. Early Jurassic Epoch rather than Lower Jurassic Series)]; and the whole artefact is renamed ‘Geologic Time Scale’. 
+  skos:changeNote """2019-06-10 - This revision adjusts the nomenclature of units to use only chronologic terminology rather than stratigraphic terminology [e.g. Cambrian-Age 2 in place of Cambrian-Stage 2; Cambrian-Epoch 2 in place of Cambrian-Series 2; Early/Late in place of Lower/Upper (namely in application to Epoch/time units rather than their equivalent Series/stratigraphic units—e.g. Early Jurassic Epoch rather than Lower Jurassic Series)]; and the whole artefact is renamed ‘Geologic Time Scale’.
 Also: changed samfl:shape --> geo:hasGeometry"""@en ;
   skos:changeNote "2020-01-13 - fix errors in Permian/Carboniferous - see https://github.com/GeoscienceAustralia/geosciml.org/issues/3#issuecomment-560054965"@en ;
   skos:changeNote "2020-01-13 - updated to 2019 version see http://stratigraphy.org/ICSchart/ChangeLog2012-2013-2014-2015-2016-2017-2018-2019.txt"@en ;

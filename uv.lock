@@ -1404,15 +1404,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-research-vocabs"
-version = "0.1.0"
-source = { git = "https://github.com/SamuelJennings/django-research-vocabs#07aba62bdc5bfe16e6f4cab7f33abc3aec1b3620" }
-dependencies = [
-    { name = "django" },
-    { name = "rdflib" },
-]
-
-[[package]]
 name = "django-rest-knox"
 version = "5.1.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1868,7 +1859,7 @@ source = { editable = "." }
 dependencies = [
     { name = "django" },
     { name = "django-appconf" },
-    { name = "django-research-vocabs" },
+    { name = "django-controlled-vocabularies" },
     { name = "pyproj" },
 ]
 
@@ -1882,7 +1873,7 @@ dev = [
 requires-dist = [
     { name = "django", specifier = ">=6.0,<7.0" },
     { name = "django-appconf", specifier = ">=1.1.0,<2.0" },
-    { name = "django-research-vocabs", git = "https://github.com/SamuelJennings/django-research-vocabs" },
+    { name = "django-controlled-vocabularies", specifier = ">=0.3.1,<0.4.0" },
     { name = "pyproj", specifier = ">=3.7.1,<4.0" },
 ]
 

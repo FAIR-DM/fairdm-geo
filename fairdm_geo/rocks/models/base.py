@@ -1,7 +1,7 @@
 """Base rock model."""
 
 from controlled_vocabularies.fields import ConceptField
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from fairdm_geo.core.models import GenericEarthSample
 from fairdm_geo.vocabularies import (

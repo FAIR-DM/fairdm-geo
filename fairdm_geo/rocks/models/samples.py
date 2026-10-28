@@ -1,7 +1,7 @@
 """Concrete rock sample models."""
 
 from controlled_vocabularies.fields import ConceptField
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from fairdm_geo.vocabularies import (
     ODM2_SPECIMEN_TYPE,

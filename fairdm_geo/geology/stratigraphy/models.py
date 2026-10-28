@@ -2,7 +2,7 @@
 
 from controlled_vocabularies.fields import ConceptField
 from django.db import models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from fairdm_geo.vocabularies import CGI_GENETIC_CATEGORY, CGI_STRATIGRAPHIC_RANK
 

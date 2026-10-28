@@ -4,7 +4,7 @@ from controlled_vocabularies.fields import MultiConceptField
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models as dj_models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from fairdm.core.models import Sample
 from fairdm.db import models
 

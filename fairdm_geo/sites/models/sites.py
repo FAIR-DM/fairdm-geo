@@ -1,7 +1,7 @@
 """Concrete sampling location and borehole models."""
 
 from controlled_vocabularies.fields import ConceptField
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from fairdm.db.models import QuantityField
 
 from fairdm_geo.core.models import GenericEarthSample, GenericHole, GeoDepthInterval

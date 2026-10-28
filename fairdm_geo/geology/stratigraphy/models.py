@@ -1,21 +1,27 @@
+from controlled_vocabularies.fields import ConceptField
 from django.db import models
 from django.utils.translation import gettext as _
-from research_vocabs.fields import ConceptField
 
-from fairdm_geo.vocabularies.cgi import geosciml
+from fairdm_geo.vocabularies import CGI_GENETIC_CATEGORY, CGI_STRATIGRAPHIC_RANK
 
 
 class StratigraphicUnit(models.Model):
-    _defaults = {}
+    """A body of rock recognised by its stratigraphic rank and how it formed."""
 
     rank = ConceptField(
-        vocabulary=geosciml.StratigraphicRank,
+        vocabulary=CGI_STRATIGRAPHIC_RANK,
+        verbose_name=_("rank"),
+        help_text=_("The stratigraphic rank of the unit, such as formation or member."),
+        related_name="+",
         blank=True,
         null=True,
     )
 
     genesis = ConceptField(
-        vocabulary=geosciml.GeneticCategory,
+        vocabulary=CGI_GENETIC_CATEGORY,
+        verbose_name=_("genesis"),
+        help_text=_("The geological process that formed the unit."),
+        related_name="+",
         blank=True,
         null=True,
     )
@@ -23,10 +29,3 @@ class StratigraphicUnit(models.Model):
     class Meta:
         verbose_name = _("Stratigraphic Unit")
         verbose_name_plural = _("Stratigraphic Units")
-
-    def save(self, *args, **kwargs):
-        # make sure the rank of the unit is not equal to or greater than the rank of the parent unit
-        if self.parent and self.rank and self.parent.rank and self.rank >= self.parent.rank:
-            raise ValueError(_("The rank of the unit must be less than the rank of the parent unit"))
-
-        super().save(*args, **kwargs)

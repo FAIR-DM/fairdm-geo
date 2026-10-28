@@ -1,15 +1,14 @@
 """Abstract base models for earth science samples and intervals."""
 
+from controlled_vocabularies.fields import MultiConceptField
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models as dj_models
 from django.utils.translation import gettext as _
 from fairdm.core.models import Sample
 from fairdm.db import models
-from research_vocabs.fields import ConceptManyToManyField
 
-from fairdm_geo.vocabularies.cgi import geosciml
-from fairdm_geo.vocabularies.stratigraphy import GeologicalTimescale
+from fairdm_geo.vocabularies import CGI_SIMPLE_LITHOLOGY, ICS_TIMESCALE
 
 
 class GenericEarthSample(Sample):
@@ -175,20 +174,22 @@ class VerticalDepthInterval(VerticalInterval):
 class GeoDepthInterval(VerticalDepthInterval):
     """A geological depth interval with lithology, age, and stratigraphy information."""
 
-    lithology = ConceptManyToManyField(
-        vocabulary=geosciml.SimpleLithology,
+    lithology = MultiConceptField(
+        vocabulary=CGI_SIMPLE_LITHOLOGY,
         verbose_name=_("lithology"),
         help_text=_("The lithology of the interval."),
+        related_name="+",
         blank=True,
     )
-    age = ConceptManyToManyField(
-        vocabulary=GeologicalTimescale,
+    age = MultiConceptField(
+        vocabulary=ICS_TIMESCALE,
         verbose_name=_("geologic age"),
         help_text=_("The geologic age of the interval."),
+        related_name="+",
         blank=True,
     )
     stratigraphy = models.ManyToManyField(
-        "stratigraphy.StratigraphicUnit",
+        "fairdm_geo_stratigraphy.StratigraphicUnit",
         verbose_name=_("stratigraphy"),
         help_text=_("The stratigraphy of the interval."),
         blank=True,

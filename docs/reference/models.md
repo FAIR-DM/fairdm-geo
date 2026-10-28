@@ -106,7 +106,7 @@ constraint requires `bottom < top`.
 | `top` | Quantity, metres | None | The distance to the top of the interval relative to the vertical datum. Optional. |
 | `bottom` | Quantity, metres | None | The distance to the bottom of the interval relative to the vertical datum. Optional. |
 | `vertical_depth` | Quantity, metres | None | The total depth of the interval. Optional. |
-| `vertical_datum` | Text | `MSL` | The vertical datum. The only choice is `MSL` (Mean Sea Level). |
+| `vertical_datum` | Text | `top_of_hole` | The reference point depths are measured from, downward. The choices are `top_of_hole` (Top of hole) and `MSL` (Mean sea level). |
 
 ### VerticalDepthInterval
 

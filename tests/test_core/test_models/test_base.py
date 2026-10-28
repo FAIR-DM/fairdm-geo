@@ -40,6 +40,13 @@ class TestVerticalDepthInterval:
 
         assert (borehole.top.magnitude, borehole.bottom.magnitude) == (0, 5)
 
+    def test_a_new_borehole_is_measured_from_the_top_of_the_hole(self):
+        borehole = BoreholeFactory()
+
+        borehole.refresh_from_db()
+
+        assert borehole.vertical_datum == "top_of_hole"
+
     def test_a_bottom_above_the_top_is_refused(self):
         with pytest.raises(IntegrityError), transaction.atomic():
             BoreholeFactory(top=25, bottom=10)

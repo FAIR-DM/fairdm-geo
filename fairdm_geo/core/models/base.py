@@ -130,10 +130,14 @@ class VerticalInterval(dj_models.Model):
     vertical_datum = models.CharField(
         max_length=255,
         verbose_name=_("vertical datum"),
-        help_text=_("The vertical datum used to determine depth measurements."),
-        default="MSL",
+        help_text=_(
+            "The reference point depths are measured from. Depths are measured "
+            "downward from this datum."
+        ),
+        default="top_of_hole",
         choices=[
-            ("MSL", "Mean Sea Level"),
+            ("top_of_hole", _("Top of hole")),
+            ("MSL", _("Mean sea level")),
         ],
     )
 

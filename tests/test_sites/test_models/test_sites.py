@@ -2,16 +2,14 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from fairdm_geo.vocabularies import (
-    ELEVATION_DATUM_MSL,
-    ODM2_ELEVATION_DATUM,
+    ODM2_MEDIUM,
     ODM2_SITE_TYPE,
     SITE_TYPE_UNKNOWN,
 )
 from tests.factories import BoreholeFactory, SamplingLocationFactory
 
 CONCEPT_FIELDS = [
-    ("type", ODM2_SITE_TYPE, ODM2_ELEVATION_DATUM),
-    ("elevation_datum", ODM2_ELEVATION_DATUM, ODM2_SITE_TYPE),
+    ("type", ODM2_SITE_TYPE, ODM2_MEDIUM),
 ]
 
 
@@ -42,10 +40,9 @@ class TestSiteConceptFields:
 
 @pytest.mark.django_db
 class TestSamplingLocation:
-    def test_starts_with_an_unknown_type_and_sea_level_as_datum(self):
+    def test_starts_with_an_unknown_type(self):
         site = SamplingLocationFactory()
 
         site.refresh_from_db()
 
         assert site.get_type_uri() == SITE_TYPE_UNKNOWN
-        assert site.get_elevation_datum_uri() == ELEVATION_DATUM_MSL

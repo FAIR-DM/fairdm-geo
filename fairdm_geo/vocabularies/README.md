@@ -8,7 +8,6 @@ All files were retrieved on 2026-10-28.
 
 | File | Vocabulary | Source | Licence |
 |---|---|---|---|
-| `odm2/elevationdatum.rdf` | ODM2 Elevation Datum | <http://vocabulary.odm2.org/api/v1/elevationdatum/?format=skos> | See below |
 | `odm2/medium.rdf` | ODM2 Medium | <http://vocabulary.odm2.org/api/v1/medium/?format=skos> | See below |
 | `odm2/samplingfeaturetype.rdf` | ODM2 Sampling Feature Type | <http://vocabulary.odm2.org/api/v1/samplingfeaturetype/?format=skos> | See below |
 | `odm2/sitetype.rdf` | ODM2 Site Type | <http://vocabulary.odm2.org/api/v1/sitetype/?format=skos> | See below |

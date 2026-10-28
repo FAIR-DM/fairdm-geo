@@ -7,7 +7,6 @@ gives the download address, retrieval date and licence of every file.
 
 | Vocabulary | Publisher | Used by | File |
 |---|---|---|---|
-| ODM2 Elevation Datum | ODM2 | `SamplingLocation.elevation_datum` | `odm2/elevationdatum.rdf` |
 | ODM2 Medium | ODM2 | `BaseRock.medium` | `odm2/medium.rdf` |
 | ODM2 Sampling Feature Type | ODM2 | `BaseRock.feature_type` | `odm2/samplingfeaturetype.rdf` |
 | ODM2 Site Type | ODM2 | `SamplingLocation.type` | `odm2/sitetype.rdf` |
@@ -23,7 +22,6 @@ The URI is what a field stores to identify the vocabulary.
 
 | Name in `fairdm_geo.vocabularies` | URI |
 |---|---|
-| `ODM2_ELEVATION_DATUM` | `http://vocabulary.odm2.org/elevationdatum` |
 | `ODM2_MEDIUM` | `http://vocabulary.odm2.org/medium` |
 | `ODM2_SAMPLING_FEATURE_TYPE` | `http://vocabulary.odm2.org/samplingfeaturetype` |
 | `ODM2_SITE_TYPE` | `http://vocabulary.odm2.org/sitetype` |
@@ -40,7 +38,6 @@ the concept's name.
 
 | Name in `fairdm_geo.vocabularies` | Concept |
 |---|---|
-| `ELEVATION_DATUM_MSL` | `http://vocabulary.odm2.org/elevationdatum/MSL` |
 | `MEDIUM_ROCK` | `http://vocabulary.odm2.org/medium/rock` |
 | `SAMPLING_FEATURE_SPECIMEN` | `http://vocabulary.odm2.org/samplingfeaturetype/specimen` |
 | `SITE_TYPE_UNKNOWN` | `http://vocabulary.odm2.org/sitetype/unknown` |

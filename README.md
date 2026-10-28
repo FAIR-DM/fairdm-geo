@@ -108,7 +108,7 @@ from fairdm_geo.sites.models import Borehole
 borehole = Borehole.objects.create(
     dataset=dataset,
     name="BH-1",
-    elevation=412,
+    location_elevation=412,
     top=0,
     bottom=120,
 )

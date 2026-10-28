@@ -2,12 +2,9 @@
 
 from controlled_vocabularies.fields import ConceptField
 from django.utils.translation import gettext_lazy as _
-from fairdm.db.models import QuantityField
 
 from fairdm_geo.core.models import GenericEarthSample, GenericHole, GeoDepthInterval
 from fairdm_geo.vocabularies import (
-    ELEVATION_DATUM_MSL,
-    ODM2_ELEVATION_DATUM,
     ODM2_SITE_TYPE,
     SITE_TYPE_UNKNOWN,
 )
@@ -16,7 +13,7 @@ from fairdm_geo.vocabularies import (
 class SamplingLocation(GenericEarthSample):
     """A sampling location represents a specific geographic point where samples are collected.
 
-    Includes precise coordinates, elevation data, and site characteristics that enable
+    Includes precise coordinates and site characteristics that enable
     reproducible sampling and accurate data interpretation within geographical context.
     """
 
@@ -28,27 +25,6 @@ class SamplingLocation(GenericEarthSample):
         related_name="+",
         verbose_name=_("type"),
         help_text=_("The type of sampling location."),
-    )
-
-    elevation_datum = ConceptField(
-        verbose_name=_("elevation datum"),
-        help_text=_(
-            "The reference point for the elevation measurement, such as Mean Sea Level (MSL)."
-        ),
-        vocabulary=ODM2_ELEVATION_DATUM,
-        default=ELEVATION_DATUM_MSL,
-        related_name="+",
-    )
-
-    elevation = QuantityField(
-        verbose_name=_("elevation"),
-        base_units="m",
-        unit_choices=["m", "ft"],
-        null=True,
-        blank=True,
-        help_text=_(
-            "The site elevation in meters with reference to the specified elevation datum."
-        ),
     )
 
     class Meta:

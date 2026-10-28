@@ -19,8 +19,6 @@ A specific place where samples are collected.
 | Field | Type | Default | Description |
 |---|---|---|---|
 | `type` | Concept | `http://vocabulary.odm2.org/sitetype/unknown` | The type of sampling location. Vocabulary: ODM2 Site Type. |
-| `elevation_datum` | Concept | `http://vocabulary.odm2.org/elevationdatum/MSL` | The reference point for the elevation. Vocabulary: ODM2 Elevation Datum. |
-| `elevation` | Quantity, metres | None | The elevation above the datum. Accepts metres or feet. Optional. |
 
 ### Borehole
 
@@ -132,7 +130,7 @@ registration is in the `config.py` module of each app.
 
 | Model | Fields |
 |---|---|
-| `SamplingLocation` | `name`, `local_id`, `dataset`, `type`, `status`, `location`, `elevation`, `elevation_datum` |
+| `SamplingLocation` | `name`, `local_id`, `dataset`, `type`, `status`, `location`, `location_elevation` |
 | `Borehole` | The fields of `SamplingLocation`, then `azimuth`, `inclination`, `length` |
 | `RockSample` | `name`, `local_id`, `dataset`, `status`, `feature_type`, `medium`, `specimen_type` |
 | `DrillCore` | `name`, `local_id`, `dataset`, `status`, `specimen_type` |

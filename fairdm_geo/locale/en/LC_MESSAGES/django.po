@@ -1,0 +1,338 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-28 20:12+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core/apps.py:13
+msgid "FairDM Geo - Core Models"
+msgstr ""
+
+#: core/models/base.py:19
+msgid "generic earth sample"
+msgstr ""
+
+#: core/models/base.py:20
+msgid "generic earth samples"
+msgstr ""
+
+#: core/models/base.py:36
+msgid "azimuth"
+msgstr ""
+
+#: core/models/base.py:37
+msgid "The horizontal angle relative to a reference direction."
+msgstr ""
+
+#: core/models/base.py:44
+msgid "inclination"
+msgstr ""
+
+#: core/models/base.py:46
+msgid ""
+"The vertical angle relative to the horizontal plane where 90 is true "
+"vertical."
+msgstr ""
+
+#: core/models/base.py:54
+msgid "hole length"
+msgstr ""
+
+#: core/models/base.py:55
+msgid "The total length of the hole."
+msgstr ""
+
+#: core/models/base.py:63
+msgid "hole"
+msgstr ""
+
+#: core/models/base.py:64
+msgid "holes"
+msgstr ""
+
+#: core/models/base.py:88
+msgid "interval"
+msgstr ""
+
+#: core/models/base.py:89
+msgid "intervals"
+msgstr ""
+
+#: core/models/base.py:101
+msgid "top"
+msgstr ""
+
+#: core/models/base.py:103
+msgid ""
+"The distance to the top of the vertical interval relative to the vertical "
+"datum."
+msgstr ""
+
+#: core/models/base.py:110
+msgid "bottom"
+msgstr ""
+
+#: core/models/base.py:112
+msgid ""
+"The distance to the bottom of the vertical interval relative to the vertical "
+"datum."
+msgstr ""
+
+#: core/models/base.py:122
+msgid "vertical depth"
+msgstr ""
+
+#: core/models/base.py:124
+msgid ""
+"The total depth of the vertical interval, calculated as the absolute "
+"difference between the interval top and interval bottom."
+msgstr ""
+
+#: core/models/base.py:132
+msgid "vertical datum"
+msgstr ""
+
+#: core/models/base.py:134
+msgid ""
+"The reference point depths are measured from. Depths are measured downward "
+"from this datum."
+msgstr ""
+
+#: core/models/base.py:139
+msgid "Top of hole"
+msgstr ""
+
+#: core/models/base.py:140
+msgid "Mean sea level"
+msgstr ""
+
+#: core/models/base.py:146
+msgid "vertical interval"
+msgstr ""
+
+#: core/models/base.py:147
+msgid "vertical intervals"
+msgstr ""
+
+#: core/models/base.py:179
+msgid "depth interval"
+msgstr ""
+
+#: core/models/base.py:180
+msgid "depth intervals"
+msgstr ""
+
+#: core/models/base.py:196
+msgid "lithology"
+msgstr ""
+
+#: core/models/base.py:197
+msgid "The lithology of the interval."
+msgstr ""
+
+#: core/models/base.py:203
+msgid "geologic age"
+msgstr ""
+
+#: core/models/base.py:204
+msgid "The geologic age of the interval."
+msgstr ""
+
+#: core/models/base.py:210
+msgid "stratigraphy"
+msgstr ""
+
+#: core/models/base.py:211
+msgid "The stratigraphy of the interval."
+msgstr ""
+
+#: core/models/base.py:217
+msgid "geological depth interval"
+msgstr ""
+
+#: core/models/base.py:218
+msgid "geological depth intervals"
+msgstr ""
+
+#: geology/stratigraphy/apps.py:13
+msgid "Stratigraphy"
+msgstr ""
+
+#: geology/stratigraphy/models.py:15
+msgid "rank"
+msgstr ""
+
+#: geology/stratigraphy/models.py:16
+msgid "The stratigraphic rank of the unit, such as formation or member."
+msgstr ""
+
+#: geology/stratigraphy/models.py:24
+msgid "genesis"
+msgstr ""
+
+#: geology/stratigraphy/models.py:25
+msgid "The geological process that formed the unit."
+msgstr ""
+
+#: geology/stratigraphy/models.py:32
+msgid "Stratigraphic Unit"
+msgstr ""
+
+#: geology/stratigraphy/models.py:33
+msgid "Stratigraphic Units"
+msgstr ""
+
+#: rocks/apps.py:14
+msgid "FairDM Geo - Rock Samples"
+msgstr ""
+
+#: rocks/config.py:35
+msgid ""
+"Rock specimens collected for geological analysis. Includes information about "
+"the sample's physical characteristics, collection location, and geological "
+"context."
+msgstr ""
+
+#: rocks/config.py:63
+msgid ""
+"Core samples obtained from drilling operations. Includes whole cores, core "
+"sections, and oriented cores with detailed stratigraphic and structural "
+"information."
+msgstr ""
+
+#: rocks/config.py:89
+msgid ""
+"Rock fragments produced during drilling operations. Typically collected at "
+"regular intervals to provide continuous geological information along the "
+"borehole."
+msgstr ""
+
+#: rocks/config.py:114
+msgid ""
+"Thin slices of rock mounted on glass slides for microscopic examination. "
+"Essential for petrographic analysis and mineral identification."
+msgstr ""
+
+#: rocks/config.py:139
+msgid ""
+"Finely ground rock samples prepared for geochemical analysis. Used for "
+"techniques such as XRF, ICP-MS, and isotopic studies."
+msgstr ""
+
+#: rocks/models/base.py:19
+msgid "feature type"
+msgstr ""
+
+#: rocks/models/base.py:20
+msgid "The kind of sampling feature this record describes."
+msgstr ""
+
+#: rocks/models/base.py:27
+msgid "medium"
+msgstr ""
+
+#: rocks/models/base.py:28
+msgid "The physical medium of the specimen."
+msgstr ""
+
+#: rocks/models/samples.py:29
+msgid "specimen"
+msgstr ""
+
+#: rocks/models/samples.py:30
+msgid "The kind of specimen this record describes."
+msgstr ""
+
+#: rocks/models/samples.py:45
+msgid "rock sample"
+msgstr ""
+
+#: rocks/models/samples.py:46
+msgid "rock samples"
+msgstr ""
+
+#: rocks/models/samples.py:56
+msgid "drill core"
+msgstr ""
+
+#: rocks/models/samples.py:57
+msgid "drill cores"
+msgstr ""
+
+#: rocks/models/samples.py:67 rocks/models/samples.py:68
+msgid "drill cuttings"
+msgstr ""
+
+#: rocks/models/samples.py:78
+msgid "thin section"
+msgstr ""
+
+#: rocks/models/samples.py:79
+msgid "thin sections"
+msgstr ""
+
+#: rocks/models/samples.py:89
+msgid "rock powder"
+msgstr ""
+
+#: rocks/models/samples.py:90
+msgid "rock powders"
+msgstr ""
+
+#: sites/apps.py:14
+msgid "FairDM Geo - Sampling Locations"
+msgstr ""
+
+#: sites/config.py:29
+msgid ""
+"A sampling location represents a specific geographic point where samples are "
+"collected. Includes precise coordinates and site characteristics that enable "
+"reproducible sampling and accurate data interpretation within geographical "
+"context."
+msgstr ""
+
+#: sites/config.py:58
+msgid ""
+"A borehole represents a drilled hole in the ground used for subsurface "
+"investigation, sampling, or monitoring. Includes detailed geometry (azimuth, "
+"inclination, length) and serves as a container for depth-based sampling and "
+"measurements."
+msgstr ""
+
+#: sites/models/sites.py:26
+msgid "type"
+msgstr ""
+
+#: sites/models/sites.py:27
+msgid "The type of sampling location."
+msgstr ""
+
+#: sites/models/sites.py:32
+msgid "sampling location"
+msgstr ""
+
+#: sites/models/sites.py:33
+msgid "sampling locations"
+msgstr ""
+
+#: sites/models/sites.py:47
+msgid "borehole"
+msgstr ""
+
+#: sites/models/sites.py:48
+msgid "boreholes"
+msgstr ""

@@ -24,8 +24,6 @@ keywords = [
 dependencies = [
     "django (>=6.0,<7.0)",
     "django-controlled-vocabularies (>=0.3.1,<0.4.0)",
-    "pyproj (>=3.7.1,<4.0)",
-    "django-appconf (>=1.1.0,<2.0)",
 ]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",

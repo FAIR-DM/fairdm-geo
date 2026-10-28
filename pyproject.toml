@@ -82,3 +82,31 @@ show_missing = true
 [tool.coverage.run]
 branch = true
 source = ["fairdm_geo"]
+omit = ["*/migrations/*"]
+
+[tool.ruff]
+extend = "ruff-base.toml"
+
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/*" = ["S101", "S105", "F841"]
+
+[tool.mypy]
+files = ["fairdm_geo"]
+ignore_missing_imports = true
+no_implicit_optional = true
+warn_unused_ignores = true
+show_error_codes = true
+exclude = ["migrations/"]
+
+[tool.deptry]
+extend_exclude = ["tests/", "docs/"]
+
+[tool.deptry.package_module_name_map]
+django-controlled-vocabularies = "controlled_vocabularies"
+django-appconf = "appconf"
+
+[tool.deptry.per_rule_ignores]
+# FairDM is imported throughout but is deliberately a development dependency
+# only: the portal that installs this package installs FairDM itself (see the
+# comment on [project].dependencies).
+DEP004 = ["fairdm"]

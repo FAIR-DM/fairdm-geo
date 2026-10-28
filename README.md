@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/tests.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/tests.yml)
 [![Build](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/build.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/build.yml)
+[![Docs](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/docs.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/docs.yml)
 [![Publish](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/publish.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/publish.yml)
 [![Coverage](https://codecov.io/gh/FAIR-DM/fairdm-geo/branch/main/graph/badge.svg)](https://codecov.io/gh/FAIR-DM/fairdm-geo)
 [![PyPI](https://img.shields.io/pypi/v/fairdm-geo)](https://pypi.org/project/fairdm-geo/)

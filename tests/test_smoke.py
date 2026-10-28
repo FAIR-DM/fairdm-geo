@@ -52,7 +52,8 @@ class TestInstallation:
         call_command("makemigrations", check=True, dry_run=True, verbosity=0)
 
 
-@pytest.mark.parametrize("field", own_fields())
-def test_every_field_has_a_verbose_name_and_help_text(field):
-    assert field.help_text
-    assert field._verbose_name
+class TestModelFields:
+    @pytest.mark.parametrize("field", own_fields())
+    def test_every_field_has_a_verbose_name_and_help_text(self, field):
+        assert field.help_text
+        assert field._verbose_name

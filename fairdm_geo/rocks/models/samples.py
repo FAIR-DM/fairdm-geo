@@ -1,22 +1,44 @@
 """Concrete rock sample models."""
 
-from django.utils.translation import gettext as _
-from research_vocabs.fields import ConceptField
+from controlled_vocabularies.fields import ConceptField
+from django.utils.translation import gettext_lazy as _
 
-from fairdm_geo.vocabularies.odm2 import SpecimenType
+from fairdm_geo.vocabularies import (
+    ODM2_SPECIMEN_TYPE,
+    SPECIMEN_TYPE_CORE,
+    SPECIMEN_TYPE_CUTTINGS,
+    SPECIMEN_TYPE_INDIVIDUAL_SAMPLE,
+    SPECIMEN_TYPE_ROCK_POWDER,
+    SPECIMEN_TYPE_THIN_SECTION,
+)
 
 from .base import BaseRock
+
+
+def specimen_type_field(default: str, *, editable: bool = False) -> ConceptField:
+    """Build the specimen type field of a rock sample model.
+
+    Args:
+        default: URI of the concept the model starts with.
+        editable: Whether a form offers the field.
+
+    Returns:
+        A concept field limited to the ODM2 specimen types.
+    """
+    return ConceptField(
+        verbose_name=_("specimen"),
+        help_text=_("The kind of specimen this record describes."),
+        vocabulary=ODM2_SPECIMEN_TYPE,
+        default=default,
+        related_name="+",
+        editable=editable,
+    )
 
 
 class RockSample(BaseRock):
     """A general rock specimen collected for geological analysis."""
 
-    specimen_type = ConceptField(
-        verbose_name=_("specimen"),
-        vocabulary=SpecimenType,
-        default="individualSample",
-        editable=False,
-    )
+    specimen_type = specimen_type_field(SPECIMEN_TYPE_INDIVIDUAL_SAMPLE)
 
     class Meta:
         abstract = False
@@ -27,11 +49,7 @@ class RockSample(BaseRock):
 class DrillCore(BaseRock):
     """Core samples obtained from drilling operations."""
 
-    specimen_type = ConceptField(
-        verbose_name=_("specimen"),
-        vocabulary=SpecimenType,
-        default="core",
-    )
+    specimen_type = specimen_type_field(SPECIMEN_TYPE_CORE, editable=True)
 
     class Meta:
         abstract = False
@@ -42,12 +60,7 @@ class DrillCore(BaseRock):
 class DrillCuttings(BaseRock):
     """Rock fragments produced during drilling operations."""
 
-    specimen_type = ConceptField(
-        verbose_name=_("specimen"),
-        vocabulary=SpecimenType,
-        default="cuttings",
-        editable=False,
-    )
+    specimen_type = specimen_type_field(SPECIMEN_TYPE_CUTTINGS)
 
     class Meta:
         abstract = False
@@ -58,14 +71,7 @@ class DrillCuttings(BaseRock):
 class ThinSection(BaseRock):
     """Thin slices of rock mounted on glass slides for microscopic examination."""
 
-    ALLOWED_PARENTS = ["fairdm_geo.RockSample"]
-
-    specimen_type = ConceptField(
-        verbose_name=_("specimen"),
-        vocabulary=SpecimenType,
-        default="thinSection",
-        editable=False,
-    )
+    specimen_type = specimen_type_field(SPECIMEN_TYPE_THIN_SECTION)
 
     class Meta:
         abstract = False
@@ -76,14 +82,7 @@ class ThinSection(BaseRock):
 class RockPowder(BaseRock):
     """Finely ground rock samples prepared for geochemical analysis."""
 
-    ALLOWED_PARENTS = ["RockSample"]
-
-    specimen_type = ConceptField(
-        verbose_name=_("specimen"),
-        vocabulary=SpecimenType,
-        default="powder",
-        editable=False,
-    )
+    specimen_type = specimen_type_field(SPECIMEN_TYPE_ROCK_POWDER)
 
     class Meta:
         abstract = False

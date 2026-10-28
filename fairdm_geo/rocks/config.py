@@ -1,5 +1,4 @@
-"""
-Model Configuration for Rock Samples
+"""Model Configuration for Rock Samples.
 
 This module registers all rock sample models with the FairDM framework
 using the modern @register decorator and ModelConfiguration system.
@@ -9,7 +8,13 @@ from django.utils.translation import gettext_lazy as _
 from fairdm import register
 from fairdm.registry import Authority, ModelConfiguration, ModelMetadata
 
-from fairdm_geo.rocks.models import DrillCore, DrillCuttings, RockPowder, RockSample, ThinSection
+from fairdm_geo.rocks.models import (
+    DrillCore,
+    DrillCuttings,
+    RockPowder,
+    RockSample,
+    ThinSection,
+)
 
 # Shared authority for all FairDM Geo models
 GEO_AUTHORITY = Authority(

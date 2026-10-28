@@ -1,15 +1,14 @@
 """Abstract base models for earth science samples and intervals."""
 
+from controlled_vocabularies.fields import MultiConceptField
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models as dj_models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from fairdm.core.models import Sample
 from fairdm.db import models
-from research_vocabs.fields import ConceptManyToManyField
 
-from fairdm_geo.vocabularies.cgi import geosciml
-from fairdm_geo.vocabularies.stratigraphy import GeologicalTimescale
+from fairdm_geo.vocabularies import CGI_SIMPLE_LITHOLOGY, ICS_TIMESCALE
 
 
 class GenericEarthSample(Sample):
@@ -22,14 +21,15 @@ class GenericEarthSample(Sample):
 
 
 class GenericHole(dj_models.Model):
-    """
-    A pure field mixin for hole geometry. Does not inherit Sample lineage;
+    """A pure field mixin for hole geometry.
+
+    Does not inherit Sample lineage;
     concrete subclasses should also inherit from GenericEarthSample or a concrete
     Sample-based model (e.g. SamplingLocation) to register as a Sample type.
     E.g. samples from a borehole.
     """
 
-    HOLE_MAX_LENGTH = None
+    HOLE_MAX_LENGTH: int | None = None
 
     azimuth = models.QuantityField(
         base_units="deg",
@@ -42,7 +42,9 @@ class GenericHole(dj_models.Model):
     inclination = models.QuantityField(
         base_units="deg",
         verbose_name=_("inclination"),
-        help_text=_("The vertical angle relative to the horizontal plane where 90 is true vertical."),
+        help_text=_(
+            "The vertical angle relative to the horizontal plane where 90 is true vertical."
+        ),
         validators=[MinValueValidator(0), MaxValueValidator(90)],
         blank=True,
         null=True,
@@ -63,9 +65,13 @@ class GenericHole(dj_models.Model):
 
     def clean(self):
         """Validate that hole length doesn't exceed maximum if defined."""
-        if self.length and self.HOLE_MAX_LENGTH and self.length.magnitude > self.HOLE_MAX_LENGTH:
+        if (
+            self.length
+            and self.HOLE_MAX_LENGTH
+            and self.length.magnitude > self.HOLE_MAX_LENGTH
+        ):
             msg = f"Length of hole ({self.length}) exceeds maximum length ({self.HOLE_MAX_LENGTH} m)."
-            raise ValidationError(msg)
+            raise ValidationError(msg, code="hole_too_long")
         super().clean()
 
 
@@ -84,8 +90,8 @@ class Interval(GenericEarthSample):
 
 
 class VerticalInterval(dj_models.Model):
-    """
-    A pure field mixin for a vertical interval defined by top and bottom measurements.
+    """A pure field mixin for a vertical interval defined by top and bottom measurements.
+
     Does not inherit Sample lineage; concrete subclasses should also inherit from
     GenericEarthSample or a concrete Sample-based model to register as a Sample type.
     """
@@ -93,14 +99,18 @@ class VerticalInterval(dj_models.Model):
     top = models.QuantityField(
         base_units="m",
         verbose_name=_("top"),
-        help_text=_("The distance to the top of the vertical interval relative to the vertical datum."),
+        help_text=_(
+            "The distance to the top of the vertical interval relative to the vertical datum."
+        ),
         blank=True,
         null=True,
     )
     bottom = models.QuantityField(
         base_units="m",
         verbose_name=_("bottom"),
-        help_text=_("The distance to the bottom of the vertical interval relative to the vertical datum."),
+        help_text=_(
+            "The distance to the bottom of the vertical interval relative to the vertical datum."
+        ),
         blank=True,
         null=True,
     )
@@ -120,10 +130,14 @@ class VerticalInterval(dj_models.Model):
     vertical_datum = models.CharField(
         max_length=255,
         verbose_name=_("vertical datum"),
-        help_text=_("The vertical datum used to determine depth measurements."),
-        default="MSL",
+        help_text=_(
+            "The reference point depths are measured from. Depths are measured "
+            "downward from this datum."
+        ),
+        default="top_of_hole",
         choices=[
-            ("MSL", "Mean Sea Level"),
+            ("top_of_hole", _("Top of hole")),
+            ("MSL", _("Mean sea level")),
         ],
     )
 
@@ -134,7 +148,7 @@ class VerticalInterval(dj_models.Model):
         constraints = [
             models.CheckConstraint(
                 condition=models.Q(bottom__lt=models.F("top")),
-                name="top_above_bottom_upward",
+                name="%(app_label)s_%(class)s_top_above_bottom_upward",
             )
         ]
 
@@ -148,7 +162,9 @@ class VerticalInterval(dj_models.Model):
         elif self.bottom is not None and self.vertical_depth is not None:
             # If only bottom and vertical_depth are provided, calculate top
             self.top = self.bottom - self.vertical_depth
-        elif self.top is None and self.bottom is None and self.vertical_depth is not None:
+        elif (
+            self.top is None and self.bottom is None and self.vertical_depth is not None
+        ):
             # If only vertical_depth is provided, set top to 0 and calculate bottom
             self.top = 0
             self.bottom = self.vertical_depth
@@ -167,7 +183,7 @@ class VerticalDepthInterval(VerticalInterval):
         constraints = [
             models.CheckConstraint(
                 condition=models.Q(bottom__gt=models.F("top")),
-                name="top_above_bottom",
+                name="%(app_label)s_%(class)s_top_above_bottom",
             )
         ]
 
@@ -175,26 +191,28 @@ class VerticalDepthInterval(VerticalInterval):
 class GeoDepthInterval(VerticalDepthInterval):
     """A geological depth interval with lithology, age, and stratigraphy information."""
 
-    lithology = ConceptManyToManyField(
-        vocabulary=geosciml.SimpleLithology,
+    lithology = MultiConceptField(
+        vocabulary=CGI_SIMPLE_LITHOLOGY,
         verbose_name=_("lithology"),
         help_text=_("The lithology of the interval."),
+        related_name="+",
         blank=True,
     )
-    age = ConceptManyToManyField(
-        vocabulary=GeologicalTimescale,
+    age = MultiConceptField(
+        vocabulary=ICS_TIMESCALE,
         verbose_name=_("geologic age"),
         help_text=_("The geologic age of the interval."),
+        related_name="+",
         blank=True,
     )
     stratigraphy = models.ManyToManyField(
-        "stratigraphy.StratigraphicUnit",
+        "fairdm_geo_stratigraphy.StratigraphicUnit",
         verbose_name=_("stratigraphy"),
         help_text=_("The stratigraphy of the interval."),
         blank=True,
     )
 
-    class Meta:
+    class Meta(VerticalDepthInterval.Meta):
         abstract = True
         verbose_name = _("geological depth interval")
         verbose_name_plural = _("geological depth intervals")

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Command-line entry point for the development and test settings."""
 
 import os
 import sys

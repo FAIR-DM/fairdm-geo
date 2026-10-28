@@ -1,174 +1,114 @@
-[tool.poetry]
+[project]
 name = "fairdm-geo"
-version = "0.0.1"
 description = "Geoscience integrations for the FairDM Framework"
-authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "MIT"
+version = "0.0.1"
 readme = "README.md"
-homepage = "https://github.com/FAIR-DM/fairdm-geo"
-packages = [{ include = "fairdm_geo" }]
+authors = [{ name = "Sam Jennings", email = "samuel.scott.jennings@gmail.com" }]
+requires-python = '>=3.13,<4.0'
 keywords = [
     "science",
     "research",
     "django",
-    "geoluminate",
+    "fairdm",
     "geology",
     "geoscience",
     "earth science",
     "open data",
     "FAIR",
 ]
-
+# fairdm is deliberately not a runtime dependency: a portal installs FairDM
+# itself and pins its own version, and declaring it here caused resolver
+# conflicts downstream. It is a development dependency below so the test suite
+# can import it.
+dependencies = [
+    "django (>=6.0,<7.0)",
+    "django-controlled-vocabularies (>=0.3.1,<0.4.0)",
+]
 classifiers = [
-    "Development Status :: 1 - Development",
+    "Development Status :: 2 - Pre-Alpha",
+    "Framework :: Django",
+    "Framework :: Django :: 6.0",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Framework :: Django",
     "Natural Language :: English",
-    "Topic :: Internet :: WWW/HTTP",
-    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.13,<4.0"
-django = ">4"
-django-research-vocabs = { git = "https://github.com/SamuelJennings/django-research-vocabs" }
-pyproj = "^3.7.1"
-django-appconf = "^1.1.0"
-
-
-[tool.poetry.group.dev.dependencies]
-fairdm-dev-tools = { git = "https://github.com/FAIR-DM/dev-tools", extras = [
-    "test",
-    "dev",
-] }
+[project.urls]
+Homepage = "https://github.com/FAIR-DM/fairdm-geo"
+Repository = "https://github.com/FAIR-DM/fairdm-geo"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["fairdm_geo"]
 
-[tool.black]
-line-length = 120
-target-version = ['py38']
-preview = true
+[tool.hatch.build.targets.sdist]
+include = ["/fairdm_geo", "/README.md", "/LICENSE"]
 
-[tool.isort]
-profile = "black"
-
-[tool.mypy]
-files = ["geoscience"]
-disallow_untyped_defs = "False"
-disallow_any_unimported = "False"
-ignore_missing_imports = "True"
-no_implicit_optional = "True"
-check_untyped_defs = "False"
-warn_return_any = "True"
-warn_unused_ignores = "True"
-show_error_codes = "True"
-exclude = ["docs/", "migrations/", "tests/settings.py"]
-mypy_path = "geoscience/"
-plugins = ["mypy_django_plugin.main"]
-
-[tool.django-stubs]
-django_settings_module = "tests.settings"
-
-[tool.ruff]
-target-version = "py37"
-line-length = 120
-fix = true
-exclude = ['docs/']
-select = [
-    # flake8-2020
-    "YTT",
-    # flake8-bandit
-    "S",
-    # flake8-bugbear
-    "B",
-    # flake8-builtins
-    "A",
-    # flake8-comprehensions
-    "C4",
-    # flake8-debugger
-    "T10",
-    # flake8-simplify
-    "SIM",
-    # isort
-    "I",
-    # mccabe
-    "C90",
-    # pycodestyle
-    "E",
-    "W",
-    # pyflakes
-    "F",
-    # pygrep-hooks
-    "PGH",
-    # pyupgrade
-    "UP",
-    # ruff
-    "RUF",
-    # tryceratops
-    "TRY",
+[dependency-groups]
+dev = [
+    "mvp-shared[dev,test]",
+    "fairdm (>=0.3.0,<0.4.0)",
+    # The pre-commit docstring check runs pydoclint, which mvp-shared v0.6.0
+    # does not bundle.
+    "pydoclint>=0.10.1",
 ]
-ignore = [
-    # LineTooLong
-    "E501",
-    # DoNotAssignLambda
-    "E731",
-    "RUF012",
+docs = [
+    "fairdm-docs[pydata-sphinx-theme]",
 ]
 
-[tool.ruff.per-file-ignores]
-"tests/*" = ["S101", "S105"]
-# "**/models.py" = ["A003",]
-# "docs/conf.py" = ["*"]
+[tool.fairdm.docs]
+theme = "pydata-sphinx-theme"
+
+[tool.uv.sources]
+mvp-shared = { git = "https://github.com/django-mvp/shared.git", tag = "v0.6.0" }
+fairdm-docs = { git = "https://github.com/FAIR-DM/fairdm-docs" }
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
-# python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
-filterwarnings = ["ignore", "default:::geoscience"]
-
-#
-
+pythonpath = [".", "tests"]
+testpaths = ["tests", "fairdm_geo"]
+python_files = ["test_*.py"]
+addopts = ["--strict-markers", "--strict-config", "--tb=short", "-ra"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::PendingDeprecationWarning"]
 
 [tool.coverage.report]
 skip_empty = true
-omit = ["*site-packages*", "*tests*", "*.tox*"]
-show_missing = "true"
+show_missing = true
 
 [tool.coverage.run]
-branch = "true"
-source = ["geoscience"]
+branch = true
+source = ["fairdm_geo"]
+omit = ["*/migrations/*"]
 
+[tool.ruff]
+extend = "ruff-base.toml"
+
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/*" = ["S101", "S105", "F841"]
+
+[tool.mypy]
+files = ["fairdm_geo"]
+ignore_missing_imports = true
+no_implicit_optional = true
+warn_unused_ignores = true
+show_error_codes = true
+exclude = ["migrations/"]
 
 [tool.deptry]
-extend_exclude = ["tasks.py", "docs/"]
-ignore_transitive = ["toml"]
+extend_exclude = ["tests/", "docs/"]
 
+[tool.deptry.package_module_name_map]
+django-controlled-vocabularies = "controlled_vocabularies"
 
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-skipsdist = true
-envlist = py38, py39, py310, py311
-
-[gh-actions]
-python =
-    3.8: py38
-    3.9: py39
-    3.10: py310
-    3.11: py311
-
-[testenv]
-passenv = PYTHON_VERSION
-allowlist_externals = poetry
-commands =
-    poetry install -v --without docs
-    pytest --doctest-modules tests --cov --cov-config=pyproject.toml --cov-report=xml
-    mypy
-"""
+[tool.deptry.per_rule_ignores]
+# FairDM is imported throughout but is deliberately a development dependency
+# only: the portal that installs this package installs FairDM itself (see the
+# comment on [project].dependencies).
+DEP004 = ["fairdm"]

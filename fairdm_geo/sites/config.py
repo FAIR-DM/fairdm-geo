@@ -1,5 +1,4 @@
-"""
-Model Configuration for Sampling Locations
+"""Model Configuration for Sampling Locations.
 
 This module registers all sampling location models with the FairDM framework
 using the modern @register decorator and ModelConfiguration system.
@@ -28,7 +27,7 @@ class SamplingLocationConfig(ModelConfiguration):
     metadata = ModelMetadata(
         description=_(
             "A sampling location represents a specific geographic point where samples are collected. "
-            "Includes precise coordinates, elevation data, and site characteristics that enable "
+            "Includes precise coordinates and site characteristics that enable "
             "reproducible sampling and accurate data interpretation within geographical context."
         ),
         authority=GEO_AUTHORITY,
@@ -42,8 +41,7 @@ class SamplingLocationConfig(ModelConfiguration):
         "type",
         "status",
         "location",
-        "elevation",
-        "elevation_datum",
+        "location_elevation",
     ]
 
     exclude = ["polymorphic_ctype"]
@@ -72,8 +70,7 @@ class BoreholeConfig(ModelConfiguration):
         "type",
         "status",
         "location",
-        "elevation",
-        "elevation_datum",
+        "location_elevation",
         "azimuth",
         "inclination",
         "length",

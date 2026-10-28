@@ -1,229 +1,160 @@
-# FairDM Geo - Geoscience Addon for FairDM
+# fairdm-geo
 
-[![Github Build](https://github.com/FAIR-DM/fairdm-earth-science/actions/workflows/build.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-earth-science/actions/workflows/build.yml)
-[![Github Docs](https://github.com/FAIR-DM/fairdm-earth-science/actions/workflows/docs.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-earth-science/actions/workflows/docs.yml)
-[![CodeCov](https://codecov.io/gh/FAIR-DM/fairdm-earth-science/branch/main/graph/badge.svg?token=0Q18CLIKZE)](https://codecov.io/gh/FAIR-DM/fairdm-earth-science)
-![GitHub](https://img.shields.io/github/license/FAIR-DM/fairdm-earth-science)
-![GitHub last commit](https://img.shields.io/github/last-commit/FAIR-DM/fairdm-earth-science)
+[![Tests](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/tests.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/tests.yml)
+[![Build](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/build.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/build.yml)
+[![Docs](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/docs.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/docs.yml)
+[![Publish](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/publish.yml/badge.svg)](https://github.com/FAIR-DM/fairdm-geo/actions/workflows/publish.yml)
+[![Coverage](https://codecov.io/gh/FAIR-DM/fairdm-geo/branch/main/graph/badge.svg)](https://codecov.io/gh/FAIR-DM/fairdm-geo)
+[![PyPI](https://img.shields.io/pypi/v/fairdm-geo)](https://pypi.org/project/fairdm-geo/)
+[![Development status](https://img.shields.io/pypi/status/fairdm-geo)](https://pypi.org/project/fairdm-geo/)
+[![Python](https://img.shields.io/pypi/pyversions/fairdm-geo)](https://pypi.org/project/fairdm-geo/)
+[![Django](https://img.shields.io/pypi/djversions/fairdm-geo)](https://pypi.org/project/fairdm-geo/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Licence](https://img.shields.io/github/license/FAIR-DM/fairdm-geo)](https://github.com/FAIR-DM/fairdm-geo/blob/main/LICENSE)
 
-A FairDM framework addon providing ready-to-use geoscience data models and controlled vocabularies for geological research projects.
+A FairDM add-on that gives a research data portal ready-made geoscience models: rock samples,
+sampling locations and boreholes, described with terms from published controlled vocabularies.
 
-## Features
+## Why
 
-### Modular Multi-App Architecture
+A portal for geoscience data needs the same few things every time. It needs a way to say what a
+sample is, where it was taken, and how deep in a hole it came from. It also needs the terms for
+that to mean the same thing across datasets: a lithology, a geological age, a type of sampling
+location.
 
-FairDM Geo is organized into separate Django apps for maximum flexibility:
+`fairdm-geo` supplies the models for those records on top of FairDM's `Sample`. The terms come from
+vocabularies that others publish and maintain (ODM2, the CGI GeoSciML vocabularies and the
+International Chronostratigraphic Chart), so your portal's data uses the same words as the
+published sources.
 
-- **`fairdm_geo.core`** - Abstract base models (GenericEarthSample, GenericHole, intervals)
-- **`fairdm_geo.rocks`** - Rock sample models (RockSample, DrillCore, ThinSection, etc.)
-- **`fairdm_geo.sites`** - Sampling location models (SamplingLocation, Borehole)
+## Scope & philosophy
 
-Install only the apps you need for your project.
+**What it is.** A set of Django apps that add geoscience models to a FairDM portal:
 
-### Geoscience Sample Models
+- Rock sample models: rock sample, drill core, drill cuttings, thin section and rock powder.
+- Sampling location models: a sampling location, and a borehole that adds hole geometry and a
+  depth interval to it.
+- A stratigraphic unit model, and abstract base models for building your own earth science
+  samples.
 
-Concrete sample models ready to use in your projects:
+The terms those models use come from published controlled vocabularies. The package ships each
+vocabulary as a file and `django-controlled-vocabularies` loads it into the database, so loading
+needs no network access.
 
-- **Rock Samples**: General rock specimens for geological analysis
-- **Drill Cores**: Core samples from drilling operations with stratigraphic information
-- **Drill Cuttings**: Rock fragments from drilling for continuous geological profiling
-- **Thin Sections**: Microscopic rock sections for petrographic analysis
-- **Rock Powder**: Prepared samples for geochemical analysis
+**What it deliberately is not.**
 
-### Sampling Features
+- **Not a GIS package.** Spatial relationships to geographic features are out of scope. A sample's
+  point location comes from FairDM's `Sample`.
+- **Not a vocabulary editor.** The shipped vocabularies are published files, kept unmodified. To
+  change a term, change it with its publisher.
+- **Not a portal.** It adds models to a portal that you build with FairDM. It has no pages of its
+  own beyond what FairDM generates for registered models.
 
-- **Sampling Locations**: Geographic points with coordinates and elevation data
-- **Boreholes**: Drilled holes with detailed geometry (azimuth, inclination, depth)
+**Tie-break principles**, when a design choice is contested:
 
-### Controlled Vocabularies
+1. **Published terms win.** A field offers the concepts of a published vocabulary and nothing else.
+   The package does not invent terms.
+2. **Build on FairDM's `Sample`.** A new record type is a `Sample` subtype, so it works everywhere
+   FairDM already works with samples.
+3. **Install only what you use.** Sampling locations, rock samples and stratigraphy are separate
+   apps, and a portal lists only the ones it wants.
 
-Pre-configured integration with ODM2 (Observations Data Model 2) vocabularies:
-- Medium types (rock, water, soil, etc.)
-- Sampling feature types (specimen, site, borehole)
-- Specimen types (core, cuttings, thin section, powder)
-- Site types and elevation datums
+## Requirements
+
+- Python 3.13
+- Django 6.0
+- FairDM 0.3
+- A PostgreSQL database with PostGIS, which FairDM requires
 
 ## Installation
 
-Add fairdm-geo to your FairDM project:
+```bash
+pip install fairdm-geo
+```
+
+`fairdm-geo` does not install FairDM, because your portal already depends on it and pins its own
+version.
+
+In your portal's settings, list `fairdm_geo` as an add-on and name the apps whose models you want:
 
 ```python
-# In your main settings.py or config/__init__.py
+# settings.py
 import fairdm
 
 fairdm.setup(
-    apps=["your_app"],
-    addons=[
-        "fairdm_geo.core",   # Required - provides abstract base models
-        "fairdm_geo.rocks",  # Optional - rock sample models
-        "fairdm_geo.sites",  # Optional - sampling location models
-    ],
-)
-```
-
-All geoscience models are automatically registered and available for use.
-
-### Selective Installation
-
-Install only the apps you need:
-
-```python
-# Just rock samples, no sampling locations
-fairdm.setup(
-    apps=["your_app"],
-    addons=[
-        "fairdm_geo.core",
+    apps=[
+        "fairdm_geo.sites",
         "fairdm_geo.rocks",
     ],
-)
-
-# Just sampling locations, no rock samples  
-fairdm.setup(
-    apps=["your_app"],
-    addons=[
-        "fairdm_geo.core",
-        "fairdm_geo.sites",
-    ],
+    addons=["fairdm_geo"],
 )
 ```
 
-## Configuration
-
-No configuration required! All models are concrete and ready to use out of the box.
-
-The old `EARTH_SAMPLES` setting is no longer needed - models are always concrete.
-
-## Usage
-
-### Working with Geoscience Samples
-
-The registered sample models integrate seamlessly with FairDM's core functionality:
-
-```python
-from fairdm_geo.rocks.models import RockSample, DrillCore
-from fairdm_geo.sites.models import SamplingLocation, Borehole
-
-# Create a sampling location
-site = SamplingLocation.objects.create(
-    name="Field Site Alpha",
-    dataset=my_dataset,
-    latitude=45.5231,
-    longitude=-122.6765,
-    elevation=150.5,
-    elevation_datum="MSL",
-)
-
-# Create a rock sample at that location
-sample = RockSample.objects.create(
-    name="Sample RS-001",
-    dataset=my_dataset,
-    parent=site,
-    status="available",
-)
-
-# Create a drill core with detailed information
-core = DrillCore.objects.create(
-    name="Core DC-001",
-    dataset=my_dataset,
-    parent=borehole,
-    status="available",
-    specimen_type="core",
-)
-```
-
-### Using Controlled Vocabularies
-
-All models come with pre-configured ODM2 vocabulary fields:
-
-```python
-from fairdm_geo.models.samples import RockSample
-
-# Vocabularies are available as model fields
-sample = RockSample.objects.create(
-    name="Sample RS-002",
-    dataset=my_dataset,
-    medium="rock",  # From ODM2 Medium vocabulary
-    specimen_type="core",  # From ODM2 SpecimenType vocabulary
-)
-```
-
-### Extending Models
-
-You can extend the abstract base classes to create custom sample types:
-
-```python
-from fairdm_geo.models.samples import BaseRock
-
-class CustomRockType(BaseRock):
-    \"\"\"Custom rock sample with additional fields.\"\"\"
-    
-    custom_field = models.CharField(max_length=100)
-    
-    class Meta(BaseRock.Meta):
-        verbose_name = "Custom Rock Sample"
-```
-
-## Model Hierarchy
-
-```
-Sample (FairDM core)
-└── GenericEarthSample (fairdm_geo base)
-    ├── BaseRock (abstract)
-    │   ├── RockSample
-    │   ├── DrillCore
-    │   ├── DrillCuttings
-    │   ├── ThinSection
-    │   └── RockPowder
-    └── SamplingLocation
-        └── Borehole
-```
-
-All models inherit from FairDM's core `Sample` model, gaining standard features like:
-- Dataset association
-- Project hierarchies
-- Metadata tracking
-- Permissions system
-- Auto-generated admin interfaces
-- REST API endpoints (if enabled)
-
-## Development
-
-### Running Tests
+Listing the add-on installs `fairdm_geo.core` and `fairdm_geo.geology.stratigraphy`, which the
+other apps build on. Then create the tables and load the vocabularies:
 
 ```bash
-poetry run pytest
-poetry run pytest --cov  # With coverage
+python manage.py migrate
+python manage.py sync_vocabularies
 ```
 
-### Project Structure
+## Quick start
 
+Create a borehole in a dataset, giving the top and bottom of the interval it covers. The depth
+fills itself in:
+
+```python
+from fairdm_geo.sites.models import Borehole
+
+borehole = Borehole.objects.create(
+    dataset=dataset,
+    name="BH-1",
+    location_elevation=412,
+    top=0,
+    bottom=120,
+)
+
+borehole.vertical_depth  # the distance between top and bottom, in metres
 ```
-fairdm_geo/
-├── models/          # Model definitions
-│   ├── samples/     # Rock samples (RockSample, DrillCore, etc.)
-│   └── features/    # Sampling features (SamplingLocation, Borehole)
-├── config.py        # Model registrations with FairDM
-├── settings.py      # Addon configuration
-└── vocabularies/    # ODM2 vocabulary integration
+
+Create a drill core. Its specimen type starts as the ODM2 `core` concept:
+
+```python
+from fairdm_geo.rocks.models import DrillCore
+
+core = DrillCore.objects.create(dataset=dataset, name="BH-1 core 1")
+core.specimen_type  # the ODM2 specimen type "core"
+```
+
+`dataset` is a FairDM `Dataset` in your portal. Every field is listed in the
+[model reference](docs/reference/models.md).
+
+## Documentation
+
+The documentation is built with [fairdm-docs](https://github.com/FAIR-DM/fairdm-docs) and lives in
+[docs/](docs/index.md):
+
+- [Add fairdm-geo to a portal](docs/how-to/add-fairdm-geo-to-a-portal.md)
+- [Load the vocabularies](docs/how-to/load-the-vocabularies.md)
+- [Models](docs/reference/models.md)
+- [Vocabularies](docs/reference/vocabularies.md)
+
+To build the site locally:
+
+```bash
+uv sync --group docs
+uv run --no-sync sphinx-build -E -W -b html docs docs/_build
 ```
 
 ## Contributing
 
-Contributions are welcome! This addon focuses on:
-- **Core models**: Reusable, well-documented geoscience sample types
-- **Vocabularies**: Integration with standard controlled vocabularies (ODM2, etc.)
-- **Documentation**: Clear examples and migration guides
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-For visualization or analysis plugins, consider creating separate dedicated addons that depend on fairdm-geo.
+## Changelog
 
-## License
+See [CHANGELOG.md](CHANGELOG.md).
 
-MIT License - see LICENSE file for details
+## Licence
 
-## Links
-
-- **Repository**: https://github.com/FAIR-DM/fairdm-geo
-- **FairDM Framework**: https://github.com/FAIR-DM/fairdm
-- **Documentation**: https://fairdm.org
-- **ODM2 Vocabularies**: http://vocabulary.odm2.org/
-
+MIT. See [LICENSE](LICENSE). The vocabulary files the package ships carry the licences of their
+publishers. See [fairdm_geo/vocabularies/README.md](fairdm_geo/vocabularies/README.md).

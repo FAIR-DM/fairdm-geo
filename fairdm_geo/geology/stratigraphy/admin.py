@@ -1,3 +1,5 @@
+"""Admin for stratigraphic units."""
+
 from django.contrib import admin
 
 from .models import StratigraphicUnit
@@ -5,4 +7,6 @@ from .models import StratigraphicUnit
 
 @admin.register(StratigraphicUnit)
 class StratigraphicUnitAdmin(admin.ModelAdmin):
+    """List stratigraphic units by rank and genesis."""
+
     list_display = ("rank", "genesis")

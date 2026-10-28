@@ -59,9 +59,16 @@ dev = [
     # does not bundle.
     "pydoclint>=0.10.1",
 ]
+docs = [
+    "fairdm-docs[pydata-sphinx-theme]",
+]
+
+[tool.fairdm.docs]
+theme = "pydata-sphinx-theme"
 
 [tool.uv.sources]
 mvp-shared = { git = "https://github.com/django-mvp/shared.git", tag = "v0.6.0" }
+fairdm-docs = { git = "https://github.com/FAIR-DM/fairdm-docs" }
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"

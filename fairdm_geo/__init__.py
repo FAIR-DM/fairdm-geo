@@ -1,16 +1,4 @@
-"""FairDM Geo - Geoscience addon for FairDM framework."""
-
-__license__ = "MIT License <http://www.opensource.org/licenses/mit-license.php>"
-__authors__ = ["Sam Jennings"]
-__docformat__ = "numpy"
-__version__ = "0.3.0"
-__version_info__ = tuple(
-    [
-        int(num) if num.isdigit() else num
-        for num in __version__.replace("-", ".", 1).split(".")
-    ]
-)
-__status__ = "Development"
+"""Geoscience models and controlled vocabularies for FairDM portals."""
 
 # The settings module FairDM applies when a portal lists this package in
 # ``fairdm.setup(addons=[...])``.

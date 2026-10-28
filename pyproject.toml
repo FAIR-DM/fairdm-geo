@@ -51,14 +51,13 @@ packages = ["fairdm_geo"]
 [tool.hatch.build.targets.sdist]
 include = ["/fairdm_geo", "/README.md", "/LICENSE"]
 
-[tool.hatch.metadata]
-# django-research-vocabs is installed from git (it is not on PyPI).
-allow-direct-references = true
-
 [dependency-groups]
 dev = [
     "mvp-shared[dev,test]",
     "fairdm (>=0.3.0,<0.4.0)",
+    # The pre-commit docstring check runs pydoclint, which mvp-shared v0.6.0
+    # does not bundle.
+    "pydoclint>=0.10.1",
 ]
 
 [tool.uv.sources]
@@ -100,7 +99,6 @@ extend_exclude = ["tests/", "docs/"]
 
 [tool.deptry.package_module_name_map]
 django-controlled-vocabularies = "controlled_vocabularies"
-django-appconf = "appconf"
 
 [tool.deptry.per_rule_ignores]
 # FairDM is imported throughout but is deliberately a development dependency

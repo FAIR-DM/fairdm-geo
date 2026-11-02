@@ -1829,7 +1829,7 @@ wheels = [
 
 [[package]]
 name = "fairdm"
-version = "0.3.0"
+version = "0.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "celery" },
@@ -1901,9 +1901,9 @@ dependencies = [
     { name = "uncertainties" },
     { name = "whitenoise" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b2/25/8497bc1701d19764c5c70060a5de9aa5ed84e64036b4900314e6decc9540/fairdm-0.3.0.tar.gz", hash = "sha256:44fc264282133c0e1b4f1dc9cc5cdb105cda7e228035e0ce6620f3a6a1311ed2", size = 682252, upload-time = "2026-10-28T17:13:08.801Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8a/89/b4a7bdda4ff5935251c9f23fc4306ff7788460db09af02204b5056fe4647/fairdm-0.3.1.tar.gz", hash = "sha256:1a401f2df9a0b401461a85deb15173afddc573f7fe12ab51d6017f0317cb1123", size = 682401, upload-time = "2026-10-28T23:06:16.038Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/86/5f/74d7bdcc192f58b281b7e764f158d058059d8da33f16acf4a4503291db5d/fairdm-0.3.0-py3-none-any.whl", hash = "sha256:75dd89006e885f248db7e5ac710f1fc51870f81006c7a8bab2ca47873b28d3f1", size = 911906, upload-time = "2026-10-28T17:13:06.73Z" },
+    { url = "https://files.pythonhosted.org/packages/4d/6a/ef218b28e43acb079e5dddf6607bf7d93548b2cfd9528c6beb67117409d5/fairdm-0.3.1-py3-none-any.whl", hash = "sha256:8d85315100f9bae1565125ae2b7d92f483befc2787ebf19f90802abf57ffa447", size = 912201, upload-time = "2026-10-28T23:06:13.947Z" },
 ]
 
 [[package]]

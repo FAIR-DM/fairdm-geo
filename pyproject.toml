@@ -60,11 +60,8 @@ dev = [
     "pydoclint>=0.10.1",
 ]
 docs = [
-    "fairdm-docs[pydata-sphinx-theme]",
+    "fairdm-docs",
 ]
-
-[tool.fairdm.docs]
-theme = "pydata-sphinx-theme"
 
 [tool.uv.sources]
 mvp-shared = { git = "https://github.com/django-mvp/shared.git", tag = "v0.6.0" }

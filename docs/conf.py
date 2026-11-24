@@ -1,7 +1,7 @@
 """Sphinx settings for the package's documentation.
 
 The site is built on fairdm-docs, which reads the project's name, version, authors and
-repository from pyproject.toml and supplies the theme chosen there, the extensions and MyST
+repository from pyproject.toml and supplies the sphinx-daisyui theme, the extensions and MyST
 options. The pages are written by hand and the models are not imported, because importing
 FairDM needs the GDAL library, which the documentation build does not have.
 """
